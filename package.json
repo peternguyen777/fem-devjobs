@@ -12,6 +12,8 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@headlessui/react": "^1.6.6",
+    "colorcolor": "^1.1.1",
+    "colorsys": "^1.0.22",
     "framer-motion": "^6.4.3",
     "next": "12.2.2",
     "react": "18.2.0",

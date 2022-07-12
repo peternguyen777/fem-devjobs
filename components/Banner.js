@@ -17,11 +17,11 @@ const Banner = () => {
         />
       </div>
       <div className='absolute left-0 hidden h-[160px] w-[768px] sm:inline-flex md:w-full lg:hidden'>
-        <Image src={bgHeaderTablet} alt='Header background image' priority />
+        <Image src={bgHeaderTablet} alt='Header background image' />
         <div className='hidden grow border-l border-violet bg-violet md:inline-flex' />
       </div>
       <div className='absolute left-0 hidden h-[160px] w-[1440px] lg:inline-flex lg:w-full '>
-        <Image src={bgHeaderDesktop} alt='Header background image' priority />
+        <Image src={bgHeaderDesktop} alt='Header background image' />
         <div className='hidden grow border-l border-violet bg-violet lg:inline-flex' />
       </div>
     </header>
