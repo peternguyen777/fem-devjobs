@@ -4,11 +4,23 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        kumbhsans: ["Kumbh Sans", "sans-serif"],
+      },
+      colors: {
+        violet: "#5964E0",
+        lightviolet: "#939BF4",
+        verydarkblue: "#19202D",
+        midnight: '#121721',
+        lightgray: "#F4F6F8",
+        gray: "#9DAEC2",
+        darkgray: "#6E8098",
+      },
       screens: {
         lg: "1440px",
-        // => @media (min-width: 992px) { ... }
       },
     },
   },
