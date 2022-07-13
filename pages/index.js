@@ -43,7 +43,7 @@ export default function Home() {
         <Banner />
         <Header enabled={enabled} setEnabled={setEnabled} />
         {jobData.length > 0 && (
-          <main className='mx-6 mt-14 grid sm:mx-auto sm:mt-[70px] sm:max-w-[1190px] sm:grid-cols-2 sm:gap-x-3 sm:px-10 md:mt-[105px] md:grid-cols-3'>
+          <main className='mx-6 mt-14 grid sm:mx-auto sm:mt-[70px] sm:max-w-[1190px] sm:grid-cols-2 sm:gap-x-3 sm:px-10 lg:mt-[105px] lg:grid-cols-3 lg:gap-x-[30px]'>
             {jobData.map((job) => {
               return <Card key={job.id} jobData={job} />;
             })}

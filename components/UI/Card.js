@@ -1,5 +1,4 @@
 import React from "react";
-import colorcolor from "colorcolor";
 
 const Card = (props) => {
   const imagePath = props.jobData.logo;
@@ -18,7 +17,7 @@ const Card = (props) => {
         <div className='h-1 w-1 rounded-full bg-darkgray'></div>
         <p className='leading-[20px] text-darkgray'>{props.jobData.contract}</p>
       </div>
-      <h3 className='mt-3 leading-[26px] dark:text-white'>
+      <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray dark:text-white'>
         {props.jobData.position}
       </h3>
       <p className='mt-3 leading-[20px] text-darkgray '>
