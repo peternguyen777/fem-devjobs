@@ -26,4 +26,8 @@
   p {
     @apply font-kumbhsans text-[16px] font-normal leading-[26px];
   }
+
+  html {
+    overflow-y: scroll;
+  }
 }
