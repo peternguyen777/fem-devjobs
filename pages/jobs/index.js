@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const jobsIndex = () => {
+const JobsIndex = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -9,4 +9,4 @@ const jobsIndex = () => {
   }, []);
 };
 
-export default jobsIndex;
+export default JobsIndex;
