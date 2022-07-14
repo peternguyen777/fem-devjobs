@@ -42,7 +42,7 @@ export default function SearchModal(props) {
             type='text'
             id='location'
             placeholder='Filter by location...'
-            className='w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-verydarkblue dark:text-white'
+            className='w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-midnight dark:text-white'
             value={props.location}
             onChange={(e) => {
               props.setLocation(e.target.value);

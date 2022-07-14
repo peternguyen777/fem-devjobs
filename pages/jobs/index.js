@@ -6,7 +6,7 @@ const JobsIndex = () => {
 
   useEffect(() => {
     router.push("/");
-  }, []);
+  }, [router]);
 };
 
 export default JobsIndex;

@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchJobsHandler();
-  }, [fetchJobsHandler]);
+  }, [fetchJobsHandler, errorMsg]);
 
   useEffect(() => {
     let jobsByContract = jobData.filter((job) => {
