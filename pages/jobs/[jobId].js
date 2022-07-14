@@ -20,9 +20,11 @@ const Page = (props) => {
         <JobTitleBar data={props.projectData} />
 
         {/* SEARCH RESULTS */}
-        {/* <main className='mx-6 mb-8 mt-14 grid max-w-[1190px] grid-cols-1 gap-y-12 sm:mx-auto sm:mb-14 sm:mt-[70px] sm:grid-cols-2 sm:gap-x-3 sm:gap-y-16 sm:px-10 lg:mt-[105px] lg:grid-cols-3 lg:gap-x-[30px]'>
-         
-        </main> */}
+        <main className='mx-auto mt-6 max-w-[810px] px-6 md:px-10'>
+          <div className='rounded-md bg-white p-6'>
+            <p className='text-darkgray'>{props.projectData.description}</p>
+          </div>
+        </main>
       </div>
       <div className='flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'></div>
     </div>

@@ -6,7 +6,7 @@ const JobTitleBar = (props) => {
   const newImagePath = "/" + imagePath.substring(2);
 
   return (
-    <div className='relative mx-auto mt-14 max-w-[1190px] px-6 sm:px-10 '>
+    <div className='relative mx-auto mt-14 max-w-[810px] px-6 md:px-10 '>
       <div
         className='absolute left-0 right-0 mx-auto flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-[15px] md:mx-0 md:ml-10 md:h-[140px] md:w-[140px] md:translate-y-0 md:rounded-[6px] md:rounded-tr-none md:rounded-br-none'
         style={{ backgroundColor: `${props.data.logoBackground}` }}
