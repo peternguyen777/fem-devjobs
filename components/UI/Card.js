@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Card = (props) => {
   const imagePath = props.jobData.logo;
@@ -22,9 +23,11 @@ const Card = (props) => {
             {props.jobData.contract}
           </p>
         </div>
-        <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray dark:text-white'>
-          {props.jobData.position}
-        </h3>
+        <Link href={`/jobs/${props.jobData.id}`}>
+          <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray dark:text-white'>
+            {props.jobData.position}
+          </h3>
+        </Link>
         <p className='mt-3 leading-[20px] text-darkgray '>
           {props.jobData.company}
         </p>

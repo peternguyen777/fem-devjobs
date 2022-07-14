@@ -24,7 +24,7 @@ export default function SearchModal(props) {
     <div
       className={`${
         props.enabled && `dark`
-      } fixed top-0 z-10 flex h-screen w-full items-center justify-center px-6 sm:hidden`}
+      } fixed top-0 z-10 flex h-screen w-full items-center justify-center px-6 md:hidden`}
     >
       <div className='z-20 w-full rounded-lg bg-white dark:bg-midnight '>
         <div className='flex h-[72px] items-center border-b border-darkgray border-opacity-20 px-6'>
@@ -67,7 +67,7 @@ export default function SearchModal(props) {
 
   const underlayContent = props.showModal ? (
     <div
-      className='fixed top-0 h-full w-full bg-black opacity-50 sm:hidden'
+      className='fixed top-0 h-full w-full bg-black opacity-50 md:hidden'
       onClick={handleClose}
     ></div>
   ) : null;

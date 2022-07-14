@@ -5,8 +5,12 @@ import Header from "../components/Header";
 import Card from "../components/UI/Card";
 import SearchBar from "../components/SearchBar";
 import SearchModal from "../components/SearchModal";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   const [enabled, setEnabled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [jobData, setJobData] = useState([]);
@@ -19,23 +23,31 @@ export default function Home() {
   const [jobsDisplay, setJobsDisplay] = useState(12);
 
   const fetchJobsHandler = useCallback(async () => {
-    const response = await fetch("data.json");
-    const data = await response.json();
+    setIsLoading(true);
 
-    const transformedJobsData = data.map((job) => {
-      return {
-        id: job.id,
-        company: job.company,
-        logo: job.logo,
-        position: job.position,
-        postedAt: job.postedAt,
-        logoBackground: job.logoBackground,
-        contract: job.contract,
-        location: job.location,
-      };
-    });
+    try {
+      const response = await fetch("data.json");
+      const data = await response.json();
 
-    setJobData(transformedJobsData);
+      const transformedJobsData = data.map((job) => {
+        return {
+          id: job.id,
+          company: job.company,
+          logo: job.logo,
+          position: job.position,
+          postedAt: job.postedAt,
+          logoBackground: job.logoBackground,
+          contract: job.contract,
+          location: job.location,
+        };
+      });
+
+      setJobData(transformedJobsData);
+    } catch (error) {
+      setErrorMsg(error.message);
+      console.log(errorMsg);
+    }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -100,25 +112,35 @@ export default function Home() {
           showModal={showModal}
           setShowModal={setShowModal}
         />
-        {jobData.length > 0 && (
+
+        {/* SEARCH RESULTS */}
+        {!isLoading ? (
           <main className='mx-6 mb-8 mt-14 grid max-w-[1190px] grid-cols-1 gap-y-12 sm:mx-auto sm:mb-14 sm:mt-[70px] sm:grid-cols-2 sm:gap-x-3 sm:gap-y-16 sm:px-10 lg:mt-[105px] lg:grid-cols-3 lg:gap-x-[30px]'>
             {filteredJobData.map((job) => {
               return <Card key={job.id} jobData={job} />;
             })}
           </main>
+        ) : (
+          <div className='my-14 flex justify-center sm:mt-[70px] lg:mt-[105px]'>
+            <LoadingSpinner />
+          </div>
         )}
       </div>
+
+      {/* FILLER DIV AT BOTTOM */}
       <div className='flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
-        <button
-          className={`${
-            jobsDisplay > filteredJobData.length && `hidden`
-          } mx-auto mb-[62px] flex h-12 cursor-pointer items-center rounded-[5px] bg-violet hover:bg-lightviolet`}
-          onClick={() => {
-            setJobsDisplay(jobsDisplay + 12);
-          }}
-        >
-          <h5 className='px-9 text-white md:flex'>Load More</h5>
-        </button>
+        {!isLoading && (
+          <button
+            className={`${
+              jobsDisplay > filteredJobData.length && `hidden`
+            } mx-auto mb-[62px] flex h-12 cursor-pointer items-center rounded-[5px] bg-violet hover:bg-lightviolet`}
+            onClick={() => {
+              setJobsDisplay(jobsDisplay + 12);
+            }}
+          >
+            <h5 className='px-9 text-white md:flex'>Load More</h5>
+          </button>
+        )}
       </div>
     </div>
   );
