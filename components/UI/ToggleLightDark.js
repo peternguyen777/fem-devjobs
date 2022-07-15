@@ -1,15 +1,12 @@
 import { Switch } from "@headlessui/react";
 import { useTheme } from "next-themes";
-import { useEffect } from "react";
 
 const ToggleLightDark = () => {
-  const { theme, systemTheme, setTheme } = useTheme();
+  const { theme, systemTheme, resolvedTheme, setTheme } = useTheme();
 
-  useEffect(() => {
-    if (systemTheme !== theme) {
-      setTheme(systemTheme);
-    }
-  }, [systemTheme]);
+  console.log("theme is:", theme);
+  console.log("systemTheme is:", systemTheme);
+  console.log("resolvedTheme is:", resolvedTheme);
 
   return (
     <Switch
