@@ -6,10 +6,8 @@ import Card from "../components/UI/Card";
 import SearchBar from "../components/SearchBar";
 import SearchModal from "../components/SearchModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
-import { useTheme } from "next-themes";
 
 export default function Home() {
-  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -85,11 +83,7 @@ export default function Home() {
   }, [jobData, filterTitle, filterLocation, filterFulltime, jobsDisplay]);
 
   return (
-    <div
-      className={`
-     ${theme === "dark" && `dark`} 
-    flex h-screen flex-col`}
-    >
+    <div className='flex h-screen flex-col'>
       <div className='bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
         <Head>
           <title>devjobs</title>

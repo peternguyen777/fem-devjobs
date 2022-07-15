@@ -4,11 +4,12 @@ import logo from "../public/assets/desktop/logo.svg";
 import iconSun from "../public/assets/desktop/icon-sun.svg";
 import iconMoon from "../public/assets/desktop/icon-moon.svg";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import ToggleLightDark from "./UI/ToggleLightDark";
+// import dynamic from "next/dynamic";
 
-const ToggleLightDark = dynamic(() => import("./UI/ToggleLightDark"), {
-  ssr: false,
-});
+// const ToggleLightDark = dynamic(() => import("./UI/ToggleLightDark"), {
+//   ssr: false,
+// });
 
 const Header = (props) => {
   return (

@@ -21,8 +21,6 @@ export default function SearchModal(props) {
 
   const handleClose = () => {
     props.setShowModal(false);
-    props.setLocation("");
-    props.setFulltime(false);
   };
 
   const modalContent = props.showModal ? (

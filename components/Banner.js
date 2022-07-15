@@ -13,7 +13,6 @@ const Banner = () => {
           alt='Header background image'
           layout='fill'
           objectFit='cover'
-          priority
         />
       </div>
       <div className='absolute left-0 hidden h-[160px] w-[768px] sm:inline-flex md:w-full lg:hidden'>

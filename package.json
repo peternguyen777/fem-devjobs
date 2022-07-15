@@ -16,7 +16,7 @@
     "colorsys": "^1.0.22",
     "framer-motion": "^6.4.3",
     "next": "12.2.2",
-    "next-themes": "^0.2.0",
+    "next-themes": "^0.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tw-elements": "^1.0.0-alpha12"
