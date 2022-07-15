@@ -21,12 +21,8 @@ export default function SearchModal(props) {
   };
 
   const modalContent = props.showModal ? (
-    <div
-      className={`${
-        props.enabled && `dark`
-      } fixed top-0 z-10 flex h-screen w-full items-center justify-center px-6 md:hidden`}
-    >
-      <div className='z-20 w-full rounded-lg bg-white dark:bg-midnight '>
+    <div className={`${props.enabled && `dark`}`}>
+      <div className=' fixed top-1/2 left-0 z-30 mx-auto w-[calc(100%-48px)] -translate-y-1/2 translate-x-6 rounded-lg bg-white dark:bg-midnight sm:w-[calc(100%-80px)] sm:translate-x-10 md:hidden'>
         <div className='flex h-[72px] items-center border-b border-darkgray border-opacity-20 px-6'>
           <svg
             id='icon location'
@@ -49,11 +45,11 @@ export default function SearchModal(props) {
             }}
           />
         </div>
-        <div className='mt-4 flex items-center px-6'>
+        <div className='mt-6 flex items-center px-6'>
           <Checkbox checked={props.fulltime} setChecked={props.setFulltime} />
           <h5 className='ml-4 select-none dark:text-white'>Full Time Only</h5>
         </div>
-        <div className='mt-4 px-6 pb-6'>
+        <div className='mt-6 px-6 pb-6'>
           <button
             className='h-[48px] w-full rounded-lg bg-violet transition duration-100 hover:opacity-50'
             onClick={submitHandler}
@@ -61,13 +57,14 @@ export default function SearchModal(props) {
             <h5 className='py-[12px] text-base text-white'>Search</h5>
           </button>
         </div>
+        {/* </div> */}
       </div>
     </div>
   ) : null;
 
   const underlayContent = props.showModal ? (
     <div
-      className='fixed top-0 h-full w-full bg-black opacity-50 md:hidden'
+      className='fixed top-0 z-20 h-full w-full bg-black opacity-50 md:hidden'
       onClick={handleClose}
     ></div>
   ) : null;
@@ -76,12 +73,13 @@ export default function SearchModal(props) {
     return (
       <React.Fragment>
         {ReactDOM.createPortal(
-          modalContent,
+          underlayContent,
+          // document.getElementById("underlay-root")
           document.getElementById("modal-root")
         )}
         {ReactDOM.createPortal(
-          underlayContent,
-          document.getElementById("underlay-root")
+          modalContent,
+          document.getElementById("modal-root")
         )}
       </React.Fragment>
     );
@@ -89,3 +87,7 @@ export default function SearchModal(props) {
     return null;
   }
 }
+
+// {`${
+//   props.enabled && `dark`
+// } fixed top-0 z-10 flex h-screen w-full items-center justify-center px-6 md:hidden`}

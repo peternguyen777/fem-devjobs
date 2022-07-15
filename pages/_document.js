@@ -19,7 +19,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <div id='modal-root' />
-          <div id='underlay-root' />
+          {/* <div id='underlay-root' /> */}
           <NextScript />
         </body>
       </Html>
