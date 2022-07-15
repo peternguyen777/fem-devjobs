@@ -1902,12 +1902,12 @@
   "resolved" "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
-"next-themes@^0.1.1":
-  "integrity" "sha512-Iqxt6rhS/KfK/iHJ0tfFjTcdLEAI0AgwFuAFrMwLOPK5e+MI3I+fzyvBoS+VaOS+NldUiazurhgwYhrfV0VXsQ=="
-  "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.1.1.tgz"
-  "version" "0.1.1"
+"next-themes@^0.2.0":
+  "integrity" "sha512-myhpDL4vadBD9YDSHiewqvzorGzB03N84e+3LxCwHRlM/hiBOaW+UsKsQojQAzC7fdcJA0l2ppveXcYaVV+hxQ=="
+  "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.2.0.tgz"
+  "version" "0.2.0"
 
-"next@>=11.1.1", "next@12.2.2":
+"next@*", "next@12.2.2":
   "integrity" "sha512-zAYFY45aBry/PlKONqtlloRFqU/We3zWYdn2NoGvDZkoYUYQSJC8WMcalS5C19MxbCZLUVCX7D7a6gTGgl2yLg=="
   "resolved" "https://registry.npmjs.org/next/-/next-12.2.2.tgz"
   "version" "12.2.2"
