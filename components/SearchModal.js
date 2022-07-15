@@ -16,8 +16,11 @@ export default function SearchModal(props) {
     console.log("Full time only:", props.fulltime);
     props.setShowModal(false);
   };
+
   const handleClose = () => {
     props.setShowModal(false);
+    props.setLocation("");
+    props.setFulltime(false);
   };
 
   const modalContent = props.showModal ? (

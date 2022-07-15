@@ -13,7 +13,9 @@ const Checkbox = (props) => {
   return (
     <div
       className={`flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[3px] duration-75 ${
-        props.checked ? `bg-violet` : `bg-darkgray opacity-10 dark:bg-white`
+        props.checked
+          ? `bg-violet`
+          : `bg-darkgray opacity-10 hover:bg-violet hover:opacity-25 dark:bg-white`
       }`}
       onClick={handleChange}
     >
