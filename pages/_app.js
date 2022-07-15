@@ -10,5 +10,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-//defaultTheme='system' enableSystem={true}
