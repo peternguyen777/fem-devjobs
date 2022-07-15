@@ -15,13 +15,9 @@ const Card = (props) => {
       </div>
       <div>
         <div className='flex items-center space-x-3'>
-          <p className='leading-[20px] text-darkgray'>
-            {props.jobData.postedAt}
-          </p>
+          <p className='leading-[20px]'>{props.jobData.postedAt}</p>
           <div className='h-1 w-1 rounded-full bg-darkgray'></div>
-          <p className='leading-[20px] text-darkgray'>
-            {props.jobData.contract}
-          </p>
+          <p className='leading-[20px]'>{props.jobData.contract}</p>
         </div>
         <Link
           href={{
@@ -31,15 +27,13 @@ const Card = (props) => {
             // },
           }}
         >
-          <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray dark:text-white'>
+          <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray '>
             {props.jobData.position}
           </h3>
         </Link>
-        <p className='mt-3 leading-[20px] text-darkgray '>
-          {props.jobData.company}
-        </p>
+        <p className='mt-3 leading-[20px]'>{props.jobData.company}</p>
       </div>
-      <h4 className='mt-10 text-violet'>{props.jobData.location}</h4>
+      <h4 className='mt-10'>{props.jobData.location}</h4>
     </div>
   );
 };

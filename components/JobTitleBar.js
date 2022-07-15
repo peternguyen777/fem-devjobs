@@ -19,8 +19,9 @@ const JobTitleBar = (props) => {
       </div>
       <div className='flex flex-col items-center rounded-md bg-white pb-8 dark:bg-verydarkblue md:ml-[140px] md:h-[140px] md:flex-row md:justify-between md:rounded-tl-none md:rounded-bl-none md:px-10 md:pb-0'>
         <div className='flex flex-col items-center md:items-start'>
-          <h3 className='mt-12 md:mt-0'>{props.data.company}</h3>
-          <p className='mt-2 mb-6 leading-[20px] text-darkgray md:mb-0'>
+          <h3 className='mt-12 md:hidden'>{props.data.company}</h3>
+          <h2 className='hidden md:inline-block'>{props.data.company}</h2>
+          <p className='mt-2 mb-6 leading-[20px] md:mb-0'>
             {props.data.website}
           </p>
         </div>

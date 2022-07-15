@@ -12,11 +12,11 @@
   }
 
   h3 {
-    @apply font-kumbhsans text-[20px] font-bold leading-[24px];
+    @apply font-kumbhsans text-[20px] font-bold leading-[24px] text-verydarkblue dark:text-white;
   }
 
   h4 {
-    @apply font-kumbhsans text-[14px] font-bold leading-[18px];
+    @apply font-kumbhsans text-[14px] font-bold leading-[18px] text-violet;
   }
 
   h5 {
@@ -24,11 +24,11 @@
   }
 
   p {
-    @apply font-kumbhsans text-[16px] font-normal leading-[26px];
+    @apply font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray;
   }
 
   li {
-    @apply font-kumbhsans text-[16px] font-normal leading-[26px];
+    @apply font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray;
   }
 
   html {
