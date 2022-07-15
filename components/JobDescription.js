@@ -31,8 +31,10 @@ const JobDescription = (props) => {
           {props.data.requirements.content}
         </p>
         <ul className='list-outside list-disc space-y-2 pl-4 text-darkgray'>
-          {props.data.requirements.items.map((item) => (
-            <li className='pl-5'>{item}</li>
+          {props.data.requirements.items.map((item, i) => (
+            <li className='pl-5' key={i}>
+              {item}
+            </li>
           ))}
         </ul>
         <h3 className='mt-10 dark:text-white md:mt-12'>What you will do</h3>
@@ -40,8 +42,10 @@ const JobDescription = (props) => {
           {props.data.role.content}
         </p>
         <ul className='list-outside list-disc space-y-2 pl-4 text-darkgray'>
-          {props.data.role.items.map((item) => (
-            <li className='pl-5'>{item}</li>
+          {props.data.role.items.map((item, i) => (
+            <li className='pl-5' key={i}>
+              {item}
+            </li>
           ))}
         </ul>
       </div>
