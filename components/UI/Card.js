@@ -23,7 +23,14 @@ const Card = (props) => {
             {props.jobData.contract}
           </p>
         </div>
-        <Link href={`/jobs/${props.jobData.id}`}>
+        <Link
+          href={{
+            pathname: `jobs/${props.jobData.id}`,
+            // query: {
+            //   lightMode: props.enabled,
+            // },
+          }}
+        >
           <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray dark:text-white'>
             {props.jobData.position}
           </h3>
