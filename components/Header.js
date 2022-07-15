@@ -3,8 +3,12 @@ import Image from "next/image";
 import logo from "../public/assets/desktop/logo.svg";
 import iconSun from "../public/assets/desktop/icon-sun.svg";
 import iconMoon from "../public/assets/desktop/icon-moon.svg";
-import ToggleLightDark from "./UI/ToggleLightDark";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const ToggleLightDark = dynamic(() => import("./UI/ToggleLightDark"), {
+  ssr: false,
+});
 
 const Header = (props) => {
   return (
@@ -17,10 +21,7 @@ const Header = (props) => {
           <div className='flex items-center'>
             <Image src={iconSun} alt='light mode' />
           </div>
-          <ToggleLightDark
-            enabled={props.enabled}
-            setEnabled={props.setEnabled}
-          />
+          <ToggleLightDark />
           <div className='flex items-center'>
             <Image src={iconMoon} alt='dark mode' />
           </div>

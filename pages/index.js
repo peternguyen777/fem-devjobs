@@ -6,12 +6,13 @@ import Card from "../components/UI/Card";
 import SearchBar from "../components/SearchBar";
 import SearchModal from "../components/SearchModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
+import { useTheme } from "next-themes";
 
 export default function Home() {
+  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const [enabled, setEnabled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [jobData, setJobData] = useState([]);
   const [filteredJobData, setFilteredJobData] = useState([]);
@@ -84,7 +85,11 @@ export default function Home() {
   }, [jobData, filterTitle, filterLocation, filterFulltime, jobsDisplay]);
 
   return (
-    <div className={`${enabled && `dark`} flex h-screen flex-col`}>
+    <div
+      className={`
+     ${theme === "dark" && `dark`} 
+    flex h-screen flex-col`}
+    >
       <div className='bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
         <Head>
           <title>devjobs</title>
@@ -93,8 +98,6 @@ export default function Home() {
           <link rel='icon' href='/assets/favicon-32x32.png' />
         </Head>
         <SearchModal
-          enabled={enabled}
-          showModal={showModal}
           setShowModal={setShowModal}
           location={filterLocation}
           setLocation={setFilterLocation}
@@ -102,7 +105,7 @@ export default function Home() {
           setFulltime={setFilterFulltime}
         />
         <Banner />
-        <Header enabled={enabled} setEnabled={setEnabled} />
+        <Header />
         <SearchBar
           title={filterTitle}
           setTitle={setFilterTitle}

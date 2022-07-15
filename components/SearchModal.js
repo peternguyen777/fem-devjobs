@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Checkbox from "./UI/Checkbox";
+import { useTheme } from "next-themes";
 
 export default function SearchModal(props) {
   const [isBrowser, setIsBrowser] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsBrowser(true);
@@ -24,7 +26,7 @@ export default function SearchModal(props) {
   };
 
   const modalContent = props.showModal ? (
-    <div className={`${props.enabled && `dark`}`}>
+    <div className={`${theme === "dark" && `dark`}`}>
       <div className=' fixed top-1/2 left-0 z-30 mx-auto w-[calc(100%-48px)] -translate-y-1/2 translate-x-6 rounded-lg bg-white dark:bg-midnight sm:w-[calc(100%-80px)] sm:translate-x-10 md:hidden'>
         <div className='flex h-[72px] items-center border-b border-darkgray border-opacity-20 px-6'>
           <svg
@@ -90,7 +92,3 @@ export default function SearchModal(props) {
     return null;
   }
 }
-
-// {`${
-//   props.enabled && `dark`
-// } fixed top-0 z-10 flex h-screen w-full items-center justify-center px-6 md:hidden`}

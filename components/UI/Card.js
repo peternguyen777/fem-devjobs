@@ -19,14 +19,7 @@ const Card = (props) => {
           <div className='h-1 w-1 rounded-full bg-darkgray'></div>
           <p className='leading-[20px]'>{props.jobData.contract}</p>
         </div>
-        <Link
-          href={{
-            pathname: `jobs/${props.jobData.id}`,
-            // query: {
-            //   lightMode: props.enabled,
-            // },
-          }}
-        >
+        <Link href={`jobs/${props.jobData.id}`}>
           <h3 className='mt-3 cursor-pointer leading-[26px] hover:text-darkgray '>
             {props.jobData.position}
           </h3>
