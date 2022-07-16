@@ -3,7 +3,7 @@ import ButtonPrimary from "./UI/ButtonPrimary";
 
 const JobFooter = (props) => {
   return (
-    <footer className='flex w-full flex-col justify-center bg-white px-6 py-6 dark:bg-verydarkblue sm:flex-row md:px-10'>
+    <footer className='flex h-[96px] w-full flex-none flex-col justify-center bg-white px-6 py-6 dark:bg-verydarkblue sm:flex-row md:px-10'>
       <div className='flex w-full max-w-[730px] flex-col sm:flex-row sm:items-center sm:justify-between'>
         <div className='hidden sm:inline-block'>
           <h3 className='dark:text-white'>{props.data.position}</h3>

@@ -10,7 +10,7 @@ import JobFooter from "../../components/JobFooter";
 
 const Page = (props) => {
   return (
-    <div className={`flex h-screen flex-col`}>
+    <div className='flex h-screen flex-col'>
       <div className='bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
         <Head>
           <title>{`devjobs - ${props.projectData.company}`}</title>
@@ -25,9 +25,9 @@ const Page = (props) => {
         {/* JOB SPECIFIC DESCRIPTION */}
         <JobDescription data={props.projectData} />
         {/* JOB SPECIFIC FOOTER */}
-        <JobFooter data={props.projectData} />
       </div>
-      <div className='flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'></div>
+      <div className='w-full flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'></div>
+      <JobFooter data={props.projectData} />
     </div>
   );
 };
