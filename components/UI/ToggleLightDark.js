@@ -10,6 +10,12 @@ const ToggleLightDark = () => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (mounted) {
+      setTheme("system");
+    }
+  }, [systemTheme]);
+
   if (!mounted) return null;
 
   const currentTheme = theme === "system" ? systemTheme : theme;
