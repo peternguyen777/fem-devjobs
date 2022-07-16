@@ -6,7 +6,7 @@ import iconMoon from "../public/assets/desktop/icon-moon.svg";
 import Link from "next/link";
 import ToggleLightDark from "./UI/ToggleLightDark";
 
-const Header = (props) => {
+const Header = () => {
   return (
     <nav className='relative mx-auto max-w-[1190px] px-6 pt-8 sm:px-10 sm:pt-11'>
       <div className='flex items-center justify-between '>
