@@ -1,6 +1,6 @@
 import { Switch } from "@headlessui/react";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ToggleLightDark = () => {
   const { systemTheme, theme, resolvedTheme, setTheme } = useTheme();
@@ -10,13 +10,9 @@ const ToggleLightDark = () => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted) {
-      setTheme("system");
-    }
-  }, [systemTheme]);
-
-  if (!mounted) return null;
+  if (!mounted) {
+    return null;
+  }
 
   const currentTheme = theme === "system" ? systemTheme : theme;
 
