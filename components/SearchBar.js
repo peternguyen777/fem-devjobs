@@ -36,7 +36,17 @@ const SearchBar = (props) => {
               type='text'
               id='title'
               placeholder='Filter by title...'
-              className='w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-verydarkblue dark:text-white'
+              className='w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-verydarkblue dark:text-white lg:hidden'
+              value={props.title}
+              onChange={(e) => {
+                props.setTitle(e.target.value);
+              }}
+            />
+            <input
+              type='text'
+              id='title'
+              placeholder='Filter by title, companies, expertise...'
+              className='hidden w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-verydarkblue dark:text-white lg:inline-block'
               value={props.title}
               onChange={(e) => {
                 props.setTitle(e.target.value);
