@@ -11,7 +11,11 @@ const JobFooter = (props) => {
             {props.data.company}
           </p>
         </div>
-        <ButtonPrimary href={props.data.apply}>Apply Now</ButtonPrimary>
+        <ButtonPrimary
+          href={`mailto:${props.data.apply}?subject=DEVJOBS%20application%20-%20${props.data.position}`}
+        >
+          Apply Now
+        </ButtonPrimary>
       </div>
     </footer>
   );

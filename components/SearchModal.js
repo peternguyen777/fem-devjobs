@@ -41,7 +41,7 @@ export default function SearchModal(props) {
             type='text'
             id='location'
             placeholder='Filter by location...'
-            className='w-full font-kumbhsans text-[16px] font-normal leading-[20px] text-darkgray placeholder:select-none placeholder:text-darkgray focus:outline-none dark:bg-midnight dark:text-white'
+            className='w-full ring-0 focus:ring-0 '
             value={props.location}
             onChange={(e) => {
               props.setLocation(e.target.value);
@@ -57,7 +57,7 @@ export default function SearchModal(props) {
             className='h-[48px] w-full rounded-lg bg-violet transition duration-100 hover:opacity-50'
             onClick={submitHandler}
           >
-            <h5 className='py-[12px] text-base text-white'>Search</h5>
+            <h3 className='py-[12px] text-base text-white'>Search</h3>
           </button>
         </div>
         {/* </div> */}

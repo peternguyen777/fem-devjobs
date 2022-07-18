@@ -6,12 +6,16 @@ import Card from "../components/UI/Card";
 import SearchBar from "../components/SearchBar";
 import SearchModal from "../components/SearchModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
+import Footer from "../components/Footer";
+import PostJobModal from "../components/PostJobModal";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+  const [showJobModal, setShowJobModal] = useState(false);
+
   const [jobData, setJobData] = useState([]);
   const [filteredJobData, setFilteredJobData] = useState([]);
 
@@ -99,6 +103,7 @@ export default function Home() {
           fulltime={filterFulltime}
           setFulltime={setFilterFulltime}
         />
+        <PostJobModal showModal={showJobModal} setShowModal={setShowJobModal} />
         <Banner />
         <Header />
         <SearchBar
@@ -141,6 +146,8 @@ export default function Home() {
           </button>
         )}
       </div>
+
+      <Footer showModal={showJobModal} setShowModal={setShowJobModal} />
     </div>
   );
 }

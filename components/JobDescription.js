@@ -21,7 +21,11 @@ const JobDescription = (props) => {
             </h1>
             <h4 className='mt-2'>{props.data.location}</h4>
           </div>
-          <ButtonPrimary href={props.data.apply}>Apply Now</ButtonPrimary>
+          <ButtonPrimary
+            href={`mailto:${props.data.apply}?subject=DEVJOBS%20application%20-%20${props.data.position}`}
+          >
+            Apply Now
+          </ButtonPrimary>
         </div>
         <p className='mt-8 md:mt-10'>{props.data.description}</p>
         <h3 className='mt-[66px] md:mt-10'>Requirements</h3>
