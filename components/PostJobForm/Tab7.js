@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function Tab7() {
-  const [role, setRole] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [task, setTask] = useState("");
 
   const taskChangeHandler = (e) => {
@@ -10,8 +10,16 @@ export default function Tab7() {
 
   const submitTaskHandler = (e) => {
     e.preventDefault();
-    setRole([...role, task]);
+    setRoles([...roles, task]);
     setTask("");
+  };
+
+  const removeTaskHandler = (e) => {
+    const taskText = e.target.innerHTML;
+    const newRoles = roles.filter((item) => {
+      return item !== taskText;
+    });
+    setRoles(newRoles);
   };
 
   return (
@@ -23,8 +31,8 @@ export default function Tab7() {
       </label>
 
       <ul className='mt-3 list-outside list-disc space-y-2 pl-4'>
-        {role?.map((item, i) => (
-          <li className='yolo pl-5' key={i}>
+        {roles?.map((item, i) => (
+          <li className='pl-5' key={i} onClick={removeTaskHandler}>
             {item}
           </li>
         ))}

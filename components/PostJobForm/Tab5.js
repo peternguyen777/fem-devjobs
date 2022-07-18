@@ -15,12 +15,11 @@ export default function Tab5() {
   };
 
   const removeTaskHandler = (e) => {
-    const deleteIndex = e.target.__reactFiber$c02s2818ohf.key;
-    const updatedArray = requirements;
-
-    updatedArray.splice(deleteIndex, 1);
-    console.log(updatedArray);
-    setRequirements(updatedArray);
+    const taskText = e.target.innerHTML;
+    const newRequirements = requirements.filter((item) => {
+      return item !== taskText;
+    });
+    setRequirements(newRequirements);
   };
 
   return (

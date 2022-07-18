@@ -33,33 +33,13 @@ export default function PostJobModal(props) {
       <form action='' id='postJob'>
         <h3 className='dark:text-white'>Post a Job</h3>
 
-        <div className={`${currentTab !== 0 && `hidden`}`}>
-          <Tab1 />
-        </div>
-
-        <div className={`${currentTab !== 1 && `hidden`}`}>
-          <Tab2 />
-        </div>
-
-        <div className={`${currentTab !== 2 && `hidden`}`}>
-          <Tab3 />
-        </div>
-
-        <div className={`${currentTab !== 3 && `hidden`}`}>
-          <Tab4 />
-        </div>
-
-        <div className={`${currentTab !== 4 && `hidden`}`}>
-          <Tab5 />
-        </div>
-
-        <div className={`${currentTab !== 5 && `hidden`}`}>
-          <Tab6 />
-        </div>
-
-        <div className={`${currentTab !== 6 && `hidden`}`}>
-          <Tab7 />
-        </div>
+        {currentTab === 0 && <Tab1 />}
+        {currentTab === 1 && <Tab2 />}
+        {currentTab === 2 && <Tab3 />}
+        {currentTab === 3 && <Tab4 />}
+        {currentTab === 4 && <Tab5 />}
+        {currentTab === 5 && <Tab6 />}
+        {currentTab === 6 && <Tab7 />}
       </form>
 
       {/* BUTTONS */}
