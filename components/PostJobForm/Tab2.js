@@ -1,4 +1,4 @@
-export default function Tab2() {
+export default function Tab2({ handleChange }) {
   return (
     <>
       {/* Website */}
@@ -10,7 +10,8 @@ export default function Tab2() {
         id='website'
         name='website'
         placeholder='eg. www.coinbase.com'
-        className='mt-3 w-full'
+        className='formInput mt-3 w-full'
+        onChange={handleChange}
       />
 
       {/* Apply Link */}
@@ -22,7 +23,8 @@ export default function Tab2() {
         id='apply'
         name='apply'
         placeholder='eg. careers@coinbase.com'
-        className='mt-3 w-full'
+        className='formInput mt-3 w-full'
+        onChange={handleChange}
       />
 
       <div className='mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
@@ -44,9 +46,27 @@ export default function Tab2() {
             <h5>Logo Background Color</h5>
           </label>
           <div className='mt-3 flex space-x-4'>
-            <input type='text' name='H' placeholder='H' className='w-12 px-2' />
-            <input type='text' name='S' placeholder='S' className='w-12 px-2' />
-            <input type='text' name='L' placeholder='L' className='w-12 px-2' />
+            <input
+              type='text'
+              name='logoBgH'
+              placeholder='H'
+              className='formInput w-12 px-2'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              name='logoBgS'
+              placeholder='S'
+              className='formInput w-12 px-2'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              name='L'
+              placeholder='L'
+              className='formInput w-12 px-2'
+              onChange={handleChange}
+            />
           </div>
         </div>
       </div>

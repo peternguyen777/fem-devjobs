@@ -1,57 +1,50 @@
-import { useState } from "react";
+import { useCallback } from "react";
 
-export default function Tab5() {
-  const [requirements, setRequirements] = useState([]);
-  const [task, setTask] = useState("");
-
-  const taskChangeHandler = (e) => {
-    setTask(e.target.value);
-  };
-
-  const submitTaskHandler = (e) => {
-    e.preventDefault();
-    setRequirements([...requirements, task]);
-    setTask("");
-  };
-
-  const removeTaskHandler = (e) => {
-    const taskText = e.target.innerHTML;
-    const newRequirements = requirements.filter((item) => {
-      return item !== taskText;
+export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
+  const removeReq = useCallback((event) => {
+    event.preventDefault();
+    const index = parseInt(event.target.dataset.index, 10);
+    setSubReqs((subReqs) => {
+      const newSubReqs = [...subReqs];
+      newSubReqs.splice(index, 1);
+      return newSubReqs;
     });
-    setRequirements(newRequirements);
-  };
+  }, []);
+
+  const addReq = useCallback((event) => {
+    event.preventDefault();
+    setSubReqs((subReqs) => [...subReqs, ""]);
+  }, []);
 
   return (
     <>
       {/* Sub requirements */}
-      <label htmlFor='listrequirements'>
+      <label>
         <h5 className='mt-6'>List of Requirements</h5>
       </label>
 
-      <ul className='mt-3 list-outside list-disc space-y-2 pl-4'>
-        {requirements.map((item, i) => (
-          <li className='pl-5' key={i} indexKey={i} onClick={removeTaskHandler}>
-            {item}
-          </li>
+      <div>
+        {subReqs.map((req, index) => (
+          <div key={index} className='mt-3 flex items-center'>
+            <input
+              value={req}
+              data-index={index}
+              onChange={handleReqChange}
+              // placeholder='eg. 3+ years of React experience'
+              className='formInput mr-4 w-full '
+            />
+            <button onClick={removeReq} data-index={index}>
+              &times;
+            </button>
+          </div>
         ))}
-      </ul>
-
-      <input
-        type='text'
-        id='listrequirements'
-        name='listrequirements'
-        value={task}
-        placeholder='eg. Expertise with React required'
-        className={`mt-3 w-full ${requirements.length > 4 && `hidden`}`}
-        onChange={taskChangeHandler}
-      />
+      </div>
 
       {/* + Add new requirement Button  */}
-      <div className={`mt-6 ${requirements.length > 4 && `hidden`}`}>
+      <div className='my-6'>
         <button
           className='h-[48px] w-full rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
-          onClick={submitTaskHandler}
+          onClick={addReq}
         >
           <h5 className='py-[12px] leading-[24px] text-violet dark:text-white'>
             + Add New Requirement

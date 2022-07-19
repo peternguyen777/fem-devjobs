@@ -36,7 +36,7 @@ const SearchBar = (props) => {
               type='text'
               id='title'
               placeholder='Filter by title...'
-              className='w-full ring-0 focus:ring-0 lg:hidden'
+              className='w-full  lg:hidden'
               value={props.title}
               onChange={(e) => {
                 props.setTitle(e.target.value);
@@ -46,7 +46,7 @@ const SearchBar = (props) => {
               type='text'
               id='title'
               placeholder='Filter by title, companies, expertise...'
-              className='hidden w-full ring-0 focus:ring-0 lg:inline-block'
+              className='hidden w-full  lg:inline-block'
               value={props.title}
               onChange={(e) => {
                 props.setTitle(e.target.value);
@@ -68,7 +68,7 @@ const SearchBar = (props) => {
               type='text'
               id='location'
               placeholder='Filter by location...'
-              className='w-full ring-0 focus:ring-0'
+              className='w-full'
               value={props.location}
               onChange={(e) => {
                 props.setLocation(e.target.value);

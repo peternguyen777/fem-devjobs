@@ -4,7 +4,6 @@ import ButtonSecondary from "./UI/ButtonSecondary";
 const JobTitleBar = (props) => {
   const imagePath = props.data.logo;
   const newImagePath = "/" + imagePath.substring(2);
-  console.log(newImagePath);
 
   return (
     <div className='relative mx-auto mt-14 max-w-[810px] px-6 md:px-10 '>

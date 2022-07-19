@@ -1,4 +1,4 @@
-export default function Tab3() {
+export default function Tab3({ handleChange }) {
   return (
     <>
       {/* Description */}
@@ -9,9 +9,10 @@ export default function Tab3() {
         type='text'
         id='description'
         name='description'
-        rows={10}
+        rows={6}
         placeholder='What type of candidate are you looking for?'
         className='mt-3 w-full'
+        onChange={handleChange}
       />
     </>
   );

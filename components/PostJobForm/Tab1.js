@@ -1,4 +1,4 @@
-export default function Tab1() {
+export default function Tab1({ handleChange }) {
   return (
     <>
       {/* Company name */}
@@ -10,7 +10,8 @@ export default function Tab1() {
         id='company'
         name='company'
         placeholder='eg. Coinbase'
-        className='mt-3 w-full'
+        className='formInput mt-3 w-full'
+        onChange={handleChange}
       />
 
       {/* Position */}
@@ -22,7 +23,8 @@ export default function Tab1() {
         id='position'
         name='position'
         placeholder='eg. Front-end Engineer'
-        className='mt-3 w-full'
+        className='formInput mt-3 w-full'
+        onChange={handleChange}
       />
 
       {/* Location */}
@@ -34,7 +36,8 @@ export default function Tab1() {
         id='location'
         name='location'
         placeholder='eg. Australia'
-        className='mt-3 w-full '
+        className='formInput mt-3 w-full '
+        onChange={handleChange}
       />
 
       {/* Contract */}
@@ -43,9 +46,13 @@ export default function Tab1() {
       </label>
       <select
         id='contract'
-        className='mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-midnight focus:dark:ring-2 focus:dark:ring-violet'
+        name='contract'
+        className='formInput mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-midnight focus:dark:ring-2 focus:dark:ring-violet'
+        onChange={handleChange}
       >
-        <option selected>Choose an Option</option>
+        <option defaultValue disabled>
+          Choose an Option
+        </option>
         <option value='Full Time'>Full Time</option>
         <option value='Part Time'>Part Time</option>
         <option value='Casual'>Casual</option>

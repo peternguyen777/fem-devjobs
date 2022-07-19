@@ -1,4 +1,4 @@
-export default function Tab4() {
+export default function Tab4({ handleChange }) {
   return (
     <>
       {/* Requirements */}
@@ -9,9 +9,10 @@ export default function Tab4() {
         type='text'
         id='requirements'
         name='requirements'
-        rows={10}
-        placeholder='What type of requirements are you looking for?'
+        rows={6}
+        placeholder='What is your ideal candidate?'
         className='mt-3 w-full'
+        onChange={handleChange}
       />
     </>
   );

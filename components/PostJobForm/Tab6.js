@@ -1,4 +1,4 @@
-export default function Tab6() {
+export default function Tab6({ handleChange }) {
   return (
     <>
       {/* Role */}
@@ -9,9 +9,10 @@ export default function Tab6() {
         type='text'
         id='role'
         name='role'
-        rows={10}
+        rows={6}
         placeholder='What does the role entail?'
         className='mt-3 w-full'
+        onChange={handleChange}
       />
     </>
   );
