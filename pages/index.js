@@ -48,7 +48,6 @@ export default function Home() {
       setJobData(transformedJobsData);
     } catch (error) {
       setErrorMsg(error.message);
-      console.log(errorMsg);
     }
     setIsLoading(false);
   }, []);

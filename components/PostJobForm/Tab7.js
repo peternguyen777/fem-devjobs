@@ -2,20 +2,26 @@ import { motion } from "framer-motion";
 import { useCallback } from "react";
 
 export default function Tab7({ handleRoleChange, subRoles, setSubRoles }) {
-  const removeRole = useCallback((event) => {
-    event.preventDefault();
-    const index = parseInt(event.target.dataset.index, 10);
-    setSubRoles((subRoles) => {
-      const newSubRoles = [...subRoles];
-      newSubRoles.splice(index, 1);
-      return newSubRoles;
-    });
-  }, []);
+  const removeRole = useCallback(
+    (event) => {
+      event.preventDefault();
+      const index = parseInt(event.target.dataset.index, 10);
+      setSubRoles((subRoles) => {
+        const newSubRoles = [...subRoles];
+        newSubRoles.splice(index, 1);
+        return newSubRoles;
+      });
+    },
+    [setSubRoles]
+  );
 
-  const addRole = useCallback((event) => {
-    event.preventDefault();
-    setSubRoles((subRoles) => [...subRoles, ""]);
-  }, []);
+  const addRole = useCallback(
+    (event) => {
+      event.preventDefault();
+      setSubRoles((subRoles) => [...subRoles, ""]);
+    },
+    [setSubRoles]
+  );
 
   return (
     <motion.div

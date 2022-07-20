@@ -2,20 +2,26 @@ import { motion } from "framer-motion";
 import { useCallback } from "react";
 
 export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
-  const removeReq = useCallback((event) => {
-    event.preventDefault();
-    const index = parseInt(event.target.dataset.index, 10);
-    setSubReqs((subReqs) => {
-      const newSubReqs = [...subReqs];
-      newSubReqs.splice(index, 1);
-      return newSubReqs;
-    });
-  }, []);
+  const removeReq = useCallback(
+    (event) => {
+      event.preventDefault();
+      const index = parseInt(event.target.dataset.index, 10);
+      setSubReqs((subReqs) => {
+        const newSubReqs = [...subReqs];
+        newSubReqs.splice(index, 1);
+        return newSubReqs;
+      });
+    },
+    [setSubReqs]
+  );
 
-  const addReq = useCallback((event) => {
-    event.preventDefault();
-    setSubReqs((subReqs) => [...subReqs, ""]);
-  }, []);
+  const addReq = useCallback(
+    (event) => {
+      event.preventDefault();
+      setSubReqs((subReqs) => [...subReqs, ""]);
+    },
+    [setSubReqs]
+  );
 
   return (
     <motion.div
