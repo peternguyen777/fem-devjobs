@@ -48,7 +48,7 @@ export default function Tab2({ handleChange, details }) {
             type='file'
             id='myFile'
             name='filename'
-            className='mt-4 rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-midnight dark:ring-0 focus:dark:ring-0'
+            className='mt-4 rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-verydarkblue dark:ring-0 focus:dark:ring-0'
           />
         </div>
         <div className='flex flex-col'>

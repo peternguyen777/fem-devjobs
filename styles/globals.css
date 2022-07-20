@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  /* Headers */
   h1 {
-    @apply font-kumbhsans text-[28px] font-bold leading-[34px];
+    @apply font-kumbhsans text-[28px] font-bold leading-[34px] text-verydarkblue dark:text-white;
   }
 
   h2 {
-    @apply font-kumbhsans text-[24px] font-bold leading-[29px];
+    @apply font-kumbhsans text-[24px] font-bold leading-[29px] text-verydarkblue dark:text-white;
   }
 
   h3 {
@@ -19,10 +20,12 @@
     @apply font-kumbhsans text-[14px] font-bold leading-[18px] text-violet;
   }
 
+  /* Button Text */
   h5 {
     @apply font-kumbhsans text-[16px] font-bold leading-[20px];
   }
 
+  /* Normal and Bullet Points */
   p {
     @apply font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray;
   }
@@ -40,12 +43,12 @@
   }
 
   textarea {
-    @apply block resize-none rounded-lg py-2 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-midnight focus:dark:ring-2 focus:dark:ring-violet;
+    @apply block resize-none rounded-lg py-2 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet;
   }
 }
 
 @layer components {
   .formInput {
-    @apply ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet  dark:ring-midnight focus:dark:ring-2 focus:dark:ring-violet;
+    @apply ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2  focus:ring-violet dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet;
   }
 }

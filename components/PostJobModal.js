@@ -160,7 +160,7 @@ export default function PostJobModal(props) {
           transition={{
             duration: 0.2,
           }}
-          className='fixed top-1/2 left-0 right-0 z-30 mx-6 flex min-h-[619px] w-[calc(100%-48px)] -translate-y-1/2 flex-col justify-between rounded-lg bg-white p-8 dark:bg-midnight sm:mx-10 sm:w-[calc(100%-80px)] md:mx-auto md:w-[688px]'
+          className='fixed top-1/2 left-0 right-0 z-30 mx-6 flex min-h-[619px] w-[calc(100%-48px)] -translate-y-1/2 flex-col justify-between rounded-lg bg-white p-8 dark:bg-verydarkblue sm:mx-10 sm:w-[calc(100%-80px)] md:mx-auto md:w-[688px]'
         >
           <form action='' id='postJob' onSubmit={submitHandler}>
             <h3 className='dark:text-white'>Post a Job</h3>

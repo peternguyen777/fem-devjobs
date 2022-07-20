@@ -60,7 +60,7 @@ export default function Tab1({ handleChange, details }) {
         id='contract'
         name='contract'
         value={details.contract}
-        className='formInput mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-midnight focus:dark:ring-2 focus:dark:ring-violet'
+        className='formInput mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet'
         onChange={handleChange}
       >
         <option defaultValue>Choose an Option</option>
