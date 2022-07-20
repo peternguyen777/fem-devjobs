@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Tab4({ handleChange, details }) {
+export default function Tab3({ register }) {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -10,20 +10,19 @@ export default function Tab4({ handleChange, details }) {
         duration: 0.1,
       }}
     >
-      {/* Requirements */}
-      <label htmlFor='requirements'>
-        <h5 className='mt-6'>Requirements</h5>
+      {/* Description */}
+      <label htmlFor='description'>
+        <h5 className='mt-6'>Description</h5>
       </label>
       <textarea
         type='text'
-        id='requirements'
-        name='requirements'
+        id='description'
+        {...register("description")}
         rows={6}
-        placeholder='What is your ideal candidate?'
-        value={details.requirements.content}
+        placeholder='What type of candidate are you looking for?'
         className='mt-3 w-full'
-        onChange={handleChange}
       />
+      {/* <p>{JSON.stringify(watch(), 2, null)}</p> */}
     </motion.section>
   );
 }

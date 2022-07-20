@@ -7,7 +7,8 @@ import SearchBar from "../components/SearchBar";
 import SearchModal from "../components/SearchModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import Footer from "../components/Footer";
-import PostJobModal from "../components/PostJobModal";
+// import PostJobModal from "../components/PostJobModal";
+import PostJobModal from "../components/PostJobModal-rhf";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);

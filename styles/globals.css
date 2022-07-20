@@ -25,6 +25,11 @@
     @apply font-kumbhsans text-[16px] font-bold leading-[20px];
   }
 
+  /* Error */
+  h6 {
+    @apply font-kumbhsans text-[16px] font-normal leading-[20px] text-red-500;
+  }
+
   /* Normal and Bullet Points */
   p {
     @apply font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray;

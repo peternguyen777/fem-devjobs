@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Tab2({ handleChange, details }) {
+export default function Tab2({ register }) {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -17,11 +17,9 @@ export default function Tab2({ handleChange, details }) {
       <input
         type='text'
         id='website'
-        name='website'
-        value={details.website}
+        {...register("website")}
         placeholder='eg. www.coinbase.com'
         className='formInput mt-3 w-full'
-        onChange={handleChange}
       />
 
       {/* Apply Link */}
@@ -31,11 +29,9 @@ export default function Tab2({ handleChange, details }) {
       <input
         type='text'
         id='apply'
-        name='apply'
-        value={details.apply}
+        {...register("apply")}
         placeholder='eg. careers@coinbase.com'
         className='formInput mt-3 w-full'
-        onChange={handleChange}
       />
 
       <div className='mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
@@ -59,31 +55,26 @@ export default function Tab2({ handleChange, details }) {
           <div className='mt-3 flex space-x-4'>
             <input
               type='text'
-              name='logoBgH'
+              {...register("logoBgH")}
               placeholder='H'
-              value={details.logoBgH}
               className='formInput w-12 px-2'
-              onChange={handleChange}
             />
             <input
               type='text'
-              name='logoBgS'
+              {...register("logoBgS")}
               placeholder='S'
-              value={details.logoBgS}
               className='formInput w-12 px-2'
-              onChange={handleChange}
             />
             <input
               type='text'
-              name='logoBgL'
+              {...register("logoBgL")}
               placeholder='L'
-              value={details.logoBgL}
               className='formInput w-12 px-2'
-              onChange={handleChange}
             />
           </div>
         </div>
       </div>
+      {/* <p>{JSON.stringify(watch(), 2, null)}</p> */}
     </motion.section>
   );
 }

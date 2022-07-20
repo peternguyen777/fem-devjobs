@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Tab1({ handleChange, details }) {
+export default function Tab1({ register, formState }) {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -17,11 +17,9 @@ export default function Tab1({ handleChange, details }) {
       <input
         type='text'
         id='company'
-        name='company'
-        value={details.company}
+        {...register("company", { required: "Company name is required." })}
         placeholder='eg. Coinbase'
         className='formInput mt-3 w-full'
-        onChange={handleChange}
       />
 
       {/* Position */}
@@ -31,11 +29,9 @@ export default function Tab1({ handleChange, details }) {
       <input
         type='text'
         id='position'
-        name='position'
-        value={details.position}
+        {...register("position", { required: "Position is required." })}
         placeholder='eg. Front-end Engineer'
         className='formInput mt-3 w-full'
-        onChange={handleChange}
       />
 
       {/* Location */}
@@ -45,11 +41,9 @@ export default function Tab1({ handleChange, details }) {
       <input
         type='text'
         id='location'
-        name='location'
-        value={details.location}
+        {...register("location", { required: "Location is required." })}
         placeholder='eg. Australia'
         className='formInput mt-3 w-full '
-        onChange={handleChange}
       />
 
       {/* Contract */}
@@ -58,16 +52,15 @@ export default function Tab1({ handleChange, details }) {
       </label>
       <select
         id='contract'
-        name='contract'
-        value={details.contract}
+        {...register("contract", { required: "Contract type is required." })}
         className='formInput mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none ring-1 ring-[#EAECF1] transition duration-200 ease-in-out focus:ring-2 focus:ring-violet dark:bg-verydarkblue dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet'
-        onChange={handleChange}
       >
         <option defaultValue>Choose an Option</option>
         <option value='Full Time'>Full Time</option>
         <option value='Part Time'>Part Time</option>
         <option value='Casual'>Casual</option>
       </select>
+      {/* <p>{JSON.stringify(watch(), 2, null)}</p> */}
     </motion.section>
   );
 }

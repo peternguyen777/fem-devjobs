@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Tab4({ handleChange, details }) {
+export default function Tab4({ register }) {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -17,13 +17,12 @@ export default function Tab4({ handleChange, details }) {
       <textarea
         type='text'
         id='requirements'
-        name='requirements'
+        {...register("requirements")}
         rows={6}
         placeholder='What is your ideal candidate?'
-        value={details.requirements.content}
         className='mt-3 w-full'
-        onChange={handleChange}
       />
+      {/* <p>{JSON.stringify(watch(), 2, null)}</p> */}
     </motion.section>
   );
 }

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function Tab3({ handleChange, details }) {
   return (
-    <motion.div
+    <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -24,6 +24,6 @@ export default function Tab3({ handleChange, details }) {
         className='mt-3 w-full'
         onChange={handleChange}
       />
-    </motion.div>
+    </motion.section>
   );
 }
