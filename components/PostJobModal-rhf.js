@@ -5,49 +5,10 @@ import FormDots from "./UI/FormDots";
 
 //RHF IMPORT
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import PostJobValidation from "../validation/PostJobValidation";
 
 //VALIDATION SCHEMA
-const ValidationSchema = yup.object().shape({
-  company: yup.string().trim().required("Company name required."),
-  position: yup.string().trim().required("Position is required."),
-  location: yup.string().trim().required("Country is required."),
-  contract: yup.string().required("Contract type is required."),
-  website: yup
-    .string()
-    .url("Invalid url.")
-    .required("Website url is required."),
-  apply: yup
-    .string()
-    .email("Invalid e-mail.")
-    .required("Email address is required."),
-  logoBgH: yup
-    .number()
-    .typeError("Must be between 0 and 359")
-    .min(0, "Must be between 0 and 359")
-    .max(359, "Must be between 0 and 359"),
-  logoBgS: yup
-    .number()
-    .typeError("Must be between 0 and 100")
-    .min(0, "Must be between 0 and 100")
-    .max(100, "Must be between 0 and 100"),
-
-  logoBgL: yup
-    .number()
-    .typeError("Must be between 0 and 100")
-    .min(0, "Must be between 0 and 100")
-    .max(359, "Must be between 0 and 100"),
-  description: yup.string().trim().required("Required field."),
-  requirements: yup.object().shape({
-    content: yup.string().trim().required("Required field."),
-    // items: yup.string(),
-  }),
-  role: yup.object().shape({
-    content: yup.string().trim().required("Required field."),
-    // items: yup.string(),
-  }),
-});
 
 export default function PostJobModal(props) {
   const [isBrowser, setIsBrowser] = useState(false);
@@ -63,7 +24,7 @@ export default function PostJobModal(props) {
     reset,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(ValidationSchema),
+    resolver: yupResolver(PostJobValidation),
     mode: "all",
   });
 
@@ -73,6 +34,7 @@ export default function PostJobModal(props) {
 
   const handleClose = () => {
     props.setShowModal(false);
+    reset();
     setCurrentTab(0);
   };
 
@@ -120,40 +82,42 @@ export default function PostJobModal(props) {
 
   const onSubmit = async (data) => {
     // console.log(data);
-    const transformedDetails = data;
+    if (isValid) {
+      const transformedDetails = data;
 
-    //TRANSFORM HSL DATA
-    const { logoBgH, logoBgS, logoBgL } = transformedDetails;
-    const logoBackgroundColor = `hsl(${logoBgH}, ${logoBgS}%, ${logoBgL}%)`;
-    delete transformedDetails.logoBgH;
-    delete transformedDetails.logoBgS;
-    delete transformedDetails.logoBgL;
-    transformedDetails["logoBackground"] = logoBackgroundColor;
+      //TRANSFORM HSL DATA
+      const { logoBgH, logoBgS, logoBgL } = transformedDetails;
+      const logoBackgroundColor = `hsl(${logoBgH}, ${logoBgS}%, ${logoBgL}%)`;
+      delete transformedDetails.logoBgH;
+      delete transformedDetails.logoBgS;
+      delete transformedDetails.logoBgL;
+      transformedDetails["logoBackground"] = logoBackgroundColor;
 
-    //ADD DATE DATA
-    transformedDetails["postedAt"] = new Date();
+      //ADD DATE DATA
+      transformedDetails["postedAt"] = new Date();
 
-    //REMOVE EMPTY STRINGS FROM REQUIREMENT ITEMS ARRAY
-    const parsedSubReqs = data.requirements.items.filter((item) => {
-      if (item !== "") {
-        return item;
-      }
-    });
-    transformedDetails.requirements.items = parsedSubReqs;
+      //REMOVE EMPTY STRINGS FROM REQUIREMENT ITEMS ARRAY
+      const parsedSubReqs = data.requirements.items.filter((item) => {
+        if (item !== "") {
+          return item;
+        }
+      });
+      transformedDetails.requirements.items = parsedSubReqs;
 
-    //REMOVE EMPTY STRINGS FROM ROLE ITEMS ARRAY
-    const parsedSubRoles = data.role.items.filter((item) => {
-      if (item !== "") {
-        return item;
-      }
-    });
-    transformedDetails.role.items = parsedSubRoles;
+      //REMOVE EMPTY STRINGS FROM ROLE ITEMS ARRAY
+      const parsedSubRoles = data.role.items.filter((item) => {
+        if (item !== "") {
+          return item;
+        }
+      });
+      transformedDetails.role.items = parsedSubRoles;
 
-    console.log(transformedDetails);
+      console.log(transformedDetails);
 
-    setCurrentTab(0);
-    // reset();
-    props.setShowModal(false);
+      setCurrentTab(0);
+      reset();
+      props.setShowModal(false);
+    }
   };
   // console.log(errors, isValid);
 
@@ -393,7 +357,7 @@ export default function PostJobModal(props) {
                     <h5>Requirements</h5>
                   </label>
                   {errors.requirements && (
-                    <h6>{errors.requirements.message}</h6>
+                    <h6>{errors.requirements.content.message}</h6>
                   )}
                 </div>
                 <textarea
@@ -469,7 +433,7 @@ export default function PostJobModal(props) {
                   <label htmlFor='role'>
                     <h5>Role</h5>
                   </label>
-                  {errors.role && <h6>{errors.role.message}</h6>}
+                  {errors.role && <h6>{errors.role.content.message}</h6>}
                 </div>
                 <textarea
                   type='text'
@@ -534,7 +498,6 @@ export default function PostJobModal(props) {
           {currentTab !== 6 ? (
             <div>
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
-              <h6>{JSON.stringify(watch(), 2, null)}</h6>
               <div className='flex justify-end space-x-4'>
                 <button
                   className={`h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50 ${
@@ -561,27 +524,38 @@ export default function PostJobModal(props) {
           ) : (
             <div>
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
-              <h6>{JSON.stringify(watch(), 2, null)}</h6>
-              <div className='flex justify-end space-x-4'>
-                <button
-                  className='h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentTab(currentTab - 1);
-                  }}
-                >
-                  <h5 className='py-[12px] leading-[24px] text-white'>Back</h5>
-                </button>
-                <button
-                  type='submit'
-                  form='postJob'
-                  className='h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50 disabled:bg-darkgray disabled:opacity-100'
-                  disabled={!isValid}
-                >
-                  <h5 className='py-[12px] leading-[24px] text-white'>
-                    Post Job
-                  </h5>
-                </button>
+              <div
+                className={`flex items-center ${
+                  isValid ? `justify-end` : `justify-between`
+                }`}
+              >
+                {!isValid && <h6>Invalid or Missing Fields.</h6>}
+                <div className='flex space-x-4'>
+                  <button
+                    className='h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentTab(currentTab - 1);
+                    }}
+                  >
+                    <h5 className='py-[12px] leading-[24px] text-white'>
+                      Back
+                    </h5>
+                  </button>
+                  <button
+                    type='submit'
+                    form='postJob'
+                    className={`h-[48px] w-[120px] cursor-pointer rounded-lg transition duration-100  ${
+                      isValid
+                        ? `bg-violet hover:opacity-50`
+                        : `bg-darkgray opacity-50`
+                    }`}
+                  >
+                    <h5 className='py-[12px] leading-[24px] text-white '>
+                      Post Job
+                    </h5>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -623,4 +597,8 @@ export default function PostJobModal(props) {
   } else {
     return null;
   }
+}
+
+{
+  /* <h6>{JSON.stringify(watch(), 2, null)}</h6> */
 }
