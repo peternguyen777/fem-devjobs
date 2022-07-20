@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactDOM from "react-dom";
 import Tab1 from "./PostJobForm/Tab1";
@@ -32,7 +32,7 @@ const initialState = {
 };
 
 export default function PostJobModal(props) {
-  const [submittedJob, setSubmittedJob] = useState([]);
+  const [submittedJob, setSubmittedJob] = useState();
   const [isBrowser, setIsBrowser] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -117,12 +117,24 @@ export default function PostJobModal(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    const transformedDetails = details;
+    const { logoBgH, logoBgS, logoBgL } = transformedDetails;
+    const logoBackground = `hsl(${logoBgH}, ${logoBgS}%, ${logoBgL}%)`;
+
+    delete transformedDetails.logoBgH;
+    delete transformedDetails.logoBgS;
+    delete transformedDetails.logoBgL;
+
+    transformedDetails["logoBackground"] = logoBackground;
+    transformedDetails["postedAt"] = new Date();
+
     props.setShowModal(false);
     setCurrentTab(0);
     setDetails(initialState);
     setSubReqs(["", "", ""]);
     setSubRoles(["", "", ""]);
-    setSubmittedJob(details);
+    setSubmittedJob(transformedDetails);
   };
 
   const handleClose = () => {
@@ -133,6 +145,10 @@ export default function PostJobModal(props) {
     setSubRoles(["", "", ""]);
     setSubmittedJob([]);
   };
+
+  useMemo(() => {
+    console.log(submittedJob);
+  }, [submittedJob]);
 
   const modalContent = (
     <AnimatePresence>
@@ -149,35 +165,35 @@ export default function PostJobModal(props) {
           <form action='' id='postJob' onSubmit={submitHandler}>
             <h3 className='dark:text-white'>Post a Job</h3>
 
-            <div className={`${currentTab !== 0 && `hidden`}`}>
-              <Tab1 handleChange={handleChange} />
-            </div>
-            <div className={`${currentTab !== 1 && `hidden`}`}>
-              <Tab2 handleChange={handleChange} />
-            </div>
-            <div className={`${currentTab !== 2 && `hidden`}`}>
-              <Tab3 handleChange={handleChange} />
-            </div>
-            <div className={`${currentTab !== 3 && `hidden`}`}>
-              <Tab4 handleChange={handleChange} />
-            </div>
-            <div className={`${currentTab !== 4 && `hidden`}`}>
+            {currentTab === 0 && (
+              <Tab1 handleChange={handleChange} details={details} />
+            )}
+            {currentTab === 1 && (
+              <Tab2 handleChange={handleChange} details={details} />
+            )}
+            {currentTab === 2 && (
+              <Tab3 handleChange={handleChange} details={details} />
+            )}
+            {currentTab === 3 && (
+              <Tab4 handleChange={handleChange} details={details} />
+            )}
+            {currentTab === 4 && (
               <Tab5
                 handleReqChange={handleReqChange}
                 subReqs={subReqs}
                 setSubReqs={setSubReqs}
               />
-            </div>
-            <div className={`${currentTab !== 5 && `hidden`}`}>
-              <Tab6 handleChange={handleChange} />
-            </div>
-            <div className={`${currentTab !== 6 && `hidden`}`}>
+            )}
+            {currentTab === 5 && (
+              <Tab6 handleChange={handleChange} details={details} />
+            )}
+            {currentTab === 6 && (
               <Tab7
                 handleRoleChange={handleRoleChange}
                 subRoles={subRoles}
                 setSubRoles={setSubRoles}
               />
-            </div>
+            )}
           </form>
 
           {/* BUTTONS */}

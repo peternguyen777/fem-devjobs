@@ -1,6 +1,15 @@
-export default function Tab2({ handleChange }) {
+import { motion } from "framer-motion";
+
+export default function Tab2({ handleChange, details }) {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.1,
+      }}
+    >
       {/* Website */}
       <label htmlFor='website'>
         <h5 className='mt-6'>Website</h5>
@@ -9,6 +18,7 @@ export default function Tab2({ handleChange }) {
         type='text'
         id='website'
         name='website'
+        value={details.website}
         placeholder='eg. www.coinbase.com'
         className='formInput mt-3 w-full'
         onChange={handleChange}
@@ -22,6 +32,7 @@ export default function Tab2({ handleChange }) {
         type='text'
         id='apply'
         name='apply'
+        value={details.apply}
         placeholder='eg. careers@coinbase.com'
         className='formInput mt-3 w-full'
         onChange={handleChange}
@@ -50,6 +61,7 @@ export default function Tab2({ handleChange }) {
               type='text'
               name='logoBgH'
               placeholder='H'
+              value={details.logoBgH}
               className='formInput w-12 px-2'
               onChange={handleChange}
             />
@@ -57,19 +69,21 @@ export default function Tab2({ handleChange }) {
               type='text'
               name='logoBgS'
               placeholder='S'
+              value={details.logoBgS}
               className='formInput w-12 px-2'
               onChange={handleChange}
             />
             <input
               type='text'
-              name='L'
+              name='logoBgL'
               placeholder='L'
+              value={details.logoBgL}
               className='formInput w-12 px-2'
               onChange={handleChange}
             />
           </div>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }

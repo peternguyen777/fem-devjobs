@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useCallback } from "react";
 
 export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
@@ -17,7 +18,14 @@ export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.1,
+      }}
+    >
       {/* Sub requirements */}
       <label>
         <h5 className='mt-6'>List of Requirements</h5>
@@ -31,6 +39,7 @@ export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
               data-index={index}
               onChange={handleReqChange}
               // placeholder='eg. 3+ years of React experience'
+
               className='formInput mr-4 w-full '
             />
             <button onClick={removeReq} data-index={index}>
@@ -51,6 +60,6 @@ export default function Tab5({ handleReqChange, subReqs, setSubReqs }) {
           </h5>
         </button>
       </div>
-    </>
+    </motion.div>
   );
 }

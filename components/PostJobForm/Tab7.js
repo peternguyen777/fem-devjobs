@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useCallback } from "react";
 
 export default function Tab7({ handleRoleChange, subRoles, setSubRoles }) {
@@ -17,7 +18,14 @@ export default function Tab7({ handleRoleChange, subRoles, setSubRoles }) {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.1,
+      }}
+    >
       {/* Sub roles */}
       <label>
         <h5 className='mt-6'>List of Roles</h5>
@@ -51,6 +59,6 @@ export default function Tab7({ handleRoleChange, subRoles, setSubRoles }) {
           </h5>
         </button>
       </div>
-    </>
+    </motion.div>
   );
 }
