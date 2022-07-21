@@ -565,10 +565,10 @@ export default function PostJobModal(props) {
                   <button
                     type='submit'
                     form='postJob'
-                    className={`h-[48px] w-[120px] cursor-pointer rounded-lg transition duration-100  ${
+                    className={`h-[48px] w-[120px] cursor-pointer rounded-lg transition duration-100 focus:ring-2 focus:ring-offset-2 ${
                       Object.keys(errors).length === 0 && isValid
-                        ? `bg-violet hover:opacity-50`
-                        : `bg-darkgray opacity-50`
+                        ? `bg-violet hover:opacity-50 focus:ring-violet`
+                        : `bg-darkgray opacity-50 focus:ring-darkgray`
                     }`}
                   >
                     <h5 className='py-[12px] leading-[24px] text-white '>
