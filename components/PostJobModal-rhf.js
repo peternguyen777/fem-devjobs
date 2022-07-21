@@ -1,36 +1,38 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactDOM from "react-dom";
 import FormDots from "./UI/FormDots";
 
 //RHF IMPORT
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PostJobValidation from "../validation/PostJobValidation";
-
-//VALIDATION SCHEMA
 
 export default function PostJobModal(props) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
-  const [subReqs, setSubReqs] = useState(["", "", ""]);
-  const [subRoles, setSubRoles] = useState(["", "", ""]);
 
   //GET USEFORM HOOKS
-  const {
-    register,
-    watch,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm({
-    resolver: yupResolver(PostJobValidation),
-    mode: "all",
-  });
+  const { register, control, handleSubmit, reset, getValues, formState } =
+    useForm({
+      resolver: yupResolver(PostJobValidation),
+      mode: "all",
+      defaultValues: {
+        reqItems: [{ items: "" }, { items: "" }, { items: "" }],
+        roleItems: [{ items: "" }, { items: "" }, { items: "" }],
+      },
+    });
 
+  const { errors, isValid } = formState;
   useEffect(() => {
     setIsBrowser(true);
   }, []);
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
 
   const handleClose = () => {
     props.setShowModal(false);
@@ -38,50 +40,20 @@ export default function PostJobModal(props) {
     setCurrentTab(0);
   };
 
-  const removeReq = useCallback(
-    (event) => {
-      event.preventDefault();
-      const index = parseInt(event.target.dataset.index, 10);
-      setSubReqs((subReqs) => {
-        const newSubReqs = [...subReqs];
-        newSubReqs.splice(index, 1);
-        return newSubReqs;
-      });
-    },
-    [setSubReqs]
-  );
+  const {
+    fields: reqFields,
+    append: reqAppend,
+    remove: reqRemove,
+  } = useFieldArray({ control, name: "reqItems" });
 
-  const addReq = useCallback(
-    (event) => {
-      event.preventDefault();
-      setSubReqs((subReqs) => [...subReqs, ""]);
-    },
-    [setSubReqs]
-  );
-
-  const removeRole = useCallback(
-    (event) => {
-      event.preventDefault();
-      const index = parseInt(event.target.dataset.index, 10);
-      setSubRoles((subRoles) => {
-        const newSubRoles = [...subRoles];
-        newSubRoles.splice(index, 1);
-        return newSubRoles;
-      });
-    },
-    [setSubRoles]
-  );
-
-  const addRole = useCallback(
-    (event) => {
-      event.preventDefault();
-      setSubRoles((subRoles) => [...subRoles, ""]);
-    },
-    [setSubRoles]
-  );
+  const {
+    fields: roleFields,
+    append: roleAppend,
+    remove: roleRemove,
+  } = useFieldArray({ control, name: "roleItems" });
 
   const onSubmit = async (data) => {
-    // console.log(data);
+    //IF DATA IS VALID, PARSE IT.
     if (isValid) {
       const transformedDetails = data;
 
@@ -96,30 +68,31 @@ export default function PostJobModal(props) {
       //ADD DATE DATA
       transformedDetails["postedAt"] = new Date();
 
-      //REMOVE EMPTY STRINGS FROM REQUIREMENT ITEMS ARRAY
-      const parsedSubReqs = data.requirements.items.filter((item) => {
-        if (item !== "") {
-          return item;
-        }
+      // parse reqItems
+      const reqItems = data.reqItems.map((item) => {
+        return item.items;
       });
-      transformedDetails.requirements.items = parsedSubReqs;
+      const filteredReqItems = reqItems.filter((str) => str !== "");
+      transformedDetails["requirements"]["items"] = filteredReqItems;
+      delete transformedDetails.reqItems;
 
-      //REMOVE EMPTY STRINGS FROM ROLE ITEMS ARRAY
-      const parsedSubRoles = data.role.items.filter((item) => {
-        if (item !== "") {
-          return item;
-        }
+      //parse roleItems
+      const roleItems = data.roleItems.map((item) => {
+        return item.items;
       });
-      transformedDetails.role.items = parsedSubRoles;
+      const filteredRoleItems = roleItems.filter((str) => str !== "");
+      transformedDetails["role"]["items"] = filteredRoleItems;
+      delete transformedDetails.roleItems;
 
       console.log(transformedDetails);
 
       setCurrentTab(0);
-      reset();
+
       props.setShowModal(false);
     }
   };
-  // console.log(errors, isValid);
+
+  // console.log(errors);
 
   const modalContent = (
     <AnimatePresence>
@@ -265,7 +238,7 @@ export default function PostJobModal(props) {
                       type='file'
                       id='myFile'
                       name='filename'
-                      className='mt-4 rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-verydarkblue dark:ring-0 focus:dark:ring-0'
+                      className='mt-4 w-full rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-verydarkblue dark:ring-0 focus:dark:ring-0'
                     />
                   </div>
                   <div className='flex flex-col'>
@@ -283,13 +256,13 @@ export default function PostJobModal(props) {
                       <input
                         type='number'
                         {...register("logoBgS")}
-                        placeholder='S'
+                        placeholder='S%'
                         className='formInput w-16 px-2'
                       />
                       <input
                         type='number'
                         {...register("logoBgL")}
-                        placeholder='L'
+                        placeholder='L%'
                         className='formInput w-16 px-2'
                       />
                     </div>
@@ -388,30 +361,48 @@ export default function PostJobModal(props) {
                 </label>
 
                 <div>
-                  {subReqs.map((req, index) => (
-                    <div key={index} className='mt-3 flex items-center'>
-                      <input
-                        // value={req}
-                        data-index={index}
-                        placeholder='eg. 3+ years of React experience'
-                        {...register(`requirements.items.${index}`)}
-                        className='formInput mr-4 w-full '
-                      />
-                      <button onClick={removeReq} data-index={index}>
-                        &times;
-                      </button>
-                    </div>
-                  ))}
+                  {reqFields.map((item, index) => {
+                    return (
+                      <div key={item.id} className='mt-3 flex items-center'>
+                        <input
+                          {...register(`reqItems.${index}.items`)}
+                          placeholder='eg. 2+ years ReactJS.'
+                          className='formInput mr-4 w-full'
+                        />
+
+                        <button type='button' onClick={() => reqRemove(index)}>
+                          &times;
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* + Add new requirement Button  */}
-                <div className='my-6'>
+                <div className='my-6 flex justify-between space-x-4'>
                   <button
-                    className='h-[48px] w-full rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
-                    onClick={addReq}
+                    type='button'
+                    className='h-[48px] flex-1 rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
+                    onClick={() => {
+                      reqAppend({ items: "" });
+                    }}
                   >
                     <h5 className='py-[12px] leading-[24px] text-violet dark:text-white'>
-                      + Add New Requirement
+                      + New Requirement
+                    </h5>
+                  </button>
+                  <button
+                    type='button'
+                    className='h-[48px] flex-1 rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
+                    onClick={() =>
+                      reset({
+                        ...getValues(),
+                        reqItems: [{ items: "" }, { items: "" }, { items: "" }],
+                      })
+                    }
+                  >
+                    <h5 className='py-[12px] leading-[24px] text-violet dark:text-white'>
+                      Reset
                     </h5>
                   </button>
                 </div>
@@ -462,31 +453,53 @@ export default function PostJobModal(props) {
                 </label>
 
                 <div>
-                  {subRoles.map((role, index) => (
-                    <div key={index} className='mt-3 flex items-center'>
-                      <input
-                        // value={role}
-                        data-index={index}
-                        // onChange={handleRoleChange}
-                        {...register(`role.items.${index}`)}
-                        // placeholder='eg. Collaborating with product and design to increase conversions and improve user experience'
-                        className='formInput mr-4 w-full'
-                      />
-                      <button onClick={removeRole} data-index={index}>
-                        &times;
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                  {roleFields.map((item, index) => {
+                    return (
+                      <div key={item.id} className='mt-3 flex items-center'>
+                        <input
+                          {...register(`roleItems.${index}.items`)}
+                          placeholder='eg. Mentor junior developers.'
+                          className='formInput mr-4 w-full'
+                        />
 
-                {/* + Add new role Button  */}
-                <div className='my-6'>
+                        <button type='button' onClick={() => roleRemove(index)}>
+                          &times;
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className='my-6 flex justify-between space-x-4'>
                   <button
-                    className='h-[48px] w-full rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
-                    onClick={addRole}
+                    type='button'
+                    className='h-[48px] flex-1 rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
+                    onClick={() => {
+                      roleAppend({ items: "" });
+                    }}
                   >
                     <h5 className='py-[12px] leading-[24px] text-violet dark:text-white'>
-                      + Add New Role
+                      + New Role
+                    </h5>
+                  </button>
+                  <button
+                    type='button'
+                    className='h-[48px] flex-1 rounded-lg bg-[#EEEFFC] transition duration-100 hover:bg-[#C4C9F4] hover:opacity-50 dark:bg-[#303641] dark:hover:bg-[#6a6e76]'
+                    onClick={() =>
+                      reset(
+                        {
+                          ...getValues(),
+                          roleItems: [
+                            { items: "" },
+                            { items: "" },
+                            { items: "" },
+                          ],
+                        },
+                        { keepErrors: true }
+                      )
+                    }
+                  >
+                    <h5 className='py-[12px] leading-[24px] text-violet dark:text-white'>
+                      Reset
                     </h5>
                   </button>
                 </div>
@@ -500,6 +513,7 @@ export default function PostJobModal(props) {
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
               <div className='flex justify-end space-x-4'>
                 <button
+                  type='button'
                   className={`h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50 ${
                     currentTab === 0 && `hidden`
                   }`}
@@ -511,6 +525,7 @@ export default function PostJobModal(props) {
                   <h5 className='py-[12px] leading-[24px] text-white'>Back</h5>
                 </button>
                 <button
+                  type='button'
                   className='h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50 disabled:bg-darkgray disabled:opacity-50'
                   onClick={(e) => {
                     e.preventDefault();
@@ -526,12 +541,17 @@ export default function PostJobModal(props) {
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
               <div
                 className={`flex items-center ${
-                  isValid ? `justify-end` : `justify-between`
+                  Object.keys(errors).length !== 0
+                    ? `justify-between`
+                    : `justify-end`
                 }`}
               >
-                {!isValid && <h6>Invalid or Missing Fields.</h6>}
+                {Object.keys(errors).length !== 0 && (
+                  <h6>Invalid or Missing Fields.</h6>
+                )}
                 <div className='flex space-x-4'>
                   <button
+                    type='button'
                     className='h-[48px] w-[120px] rounded-lg bg-violet transition duration-100 hover:opacity-50'
                     onClick={(e) => {
                       e.preventDefault();
@@ -546,7 +566,7 @@ export default function PostJobModal(props) {
                     type='submit'
                     form='postJob'
                     className={`h-[48px] w-[120px] cursor-pointer rounded-lg transition duration-100  ${
-                      isValid
+                      Object.keys(errors).length === 0 && isValid
                         ? `bg-violet hover:opacity-50`
                         : `bg-darkgray opacity-50`
                     }`}
@@ -597,8 +617,4 @@ export default function PostJobModal(props) {
   } else {
     return null;
   }
-}
-
-{
-  /* <h6>{JSON.stringify(watch(), 2, null)}</h6> */
 }

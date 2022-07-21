@@ -23,12 +23,12 @@ const ValidationSchema = yup.object().shape({
     .typeError("Must be between 0 and 100")
     .min(0, "Must be between 0 and 100")
     .max(100, "Must be between 0 and 100"),
-
   logoBgL: yup
     .number()
     .typeError("Must be between 0 and 100")
     .min(0, "Must be between 0 and 100")
     .max(359, "Must be between 0 and 100"),
+
   description: yup.string().trim().required("Required field."),
   requirements: yup.object().shape({
     content: yup.string().trim().required("Required field."),
