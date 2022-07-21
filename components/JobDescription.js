@@ -37,9 +37,9 @@ const JobDescription = (props) => {
             </li>
           ))}
         </ul>
-        <h3 className='mt-10 md:mt-12'>What you will do</h3>
-        <p className='mt-6 mb-8 md:mb-6'>{props.data.role.content}</p>
-        <ul className='list-outside list-disc space-y-2 pl-4'>
+        <h3 className='mt-10'>What you will do</h3>
+        <p className='mt-6 '>{props.data.role.content}</p>
+        <ul className='mt-8 list-outside list-disc space-y-2 pl-4 md:mt-6'>
           {props.data.role.items.map((item, i) => (
             <li className='pl-5' key={i}>
               {item}

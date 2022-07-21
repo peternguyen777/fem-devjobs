@@ -52,7 +52,7 @@ export default function SearchModal(props) {
                 type='text'
                 id='location'
                 placeholder='Filter by location...'
-                className='w-full'
+                className='w-full pl-0'
                 value={props.location}
                 onChange={(e) => {
                   props.setLocation(e.target.value);
