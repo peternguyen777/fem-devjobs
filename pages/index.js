@@ -46,7 +46,7 @@ export default function Home({ posts }) {
     setJobData(transformedJobsData);
 
     setIsLoading(false);
-  }, []);
+  }, [posts]);
 
   useEffect(() => {
     fetchJobsHandler();
