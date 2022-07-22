@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactDOM from "react-dom";
-import FormDots from "./UI/FormDots";
+import FormDots from "../UI/FormDots";
 
 //RHF IMPORT
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import PostJobValidation from "../validation/PostJobValidation";
+import PostJobValidation from "../../validation/PostJobValidation";
+import FormSuccess from "../UI/FormSuccess";
 
 export default function PostJobModal(props) {
   const [isBrowser, setIsBrowser] = useState(false);
@@ -31,13 +32,15 @@ export default function PostJobModal(props) {
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset();
+      setCurrentTab(0);
+      props.setShowModal(false);
     }
   }, [formState, reset]);
 
   const handleClose = () => {
-    props.setShowModal(false);
-    reset();
+    // reset();
     setCurrentTab(0);
+    props.setShowModal(false);
   };
 
   const {
@@ -85,10 +88,6 @@ export default function PostJobModal(props) {
       delete transformedDetails.roleItems;
 
       console.log(transformedDetails);
-
-      setCurrentTab(0);
-
-      props.setShowModal(false);
     }
   };
 
@@ -105,7 +104,9 @@ export default function PostJobModal(props) {
           transition={{
             duration: 0.2,
           }}
-          className='fixed top-1/2 left-0 right-0 z-30 mx-6 flex min-h-[619px] w-[calc(100%-48px)] -translate-y-1/2 flex-col justify-between rounded-lg bg-white p-6 dark:bg-verydarkblue sm:mx-10 sm:w-[calc(100%-80px)] sm:p-8 md:mx-auto md:w-[688px]'
+          className={`fixed top-1/2 left-0 right-0 z-30 mx-6 flex min-h-[619px] w-[calc(100%-48px)] -translate-y-1/2 flex-col rounded-lg bg-white p-6 dark:bg-verydarkblue sm:mx-10 sm:w-[calc(100%-80px)] sm:p-8 md:mx-auto md:w-[688px] ${
+            currentTab === 7 ? `justify-between` : `justify-between`
+          }`}
         >
           <form action='' id='postJob' onSubmit={handleSubmit(onSubmit)}>
             <h3 className='dark:text-white'>Post a Job</h3>
@@ -124,7 +125,7 @@ export default function PostJobModal(props) {
                 {/* Company name */}
                 <div className='relative mt-6 flex justify-between'>
                   <label htmlFor='company'>
-                    <h5>Company</h5>
+                    <h5>Company *</h5>
                   </label>
                   {errors.company && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block '>
@@ -146,7 +147,7 @@ export default function PostJobModal(props) {
                 {/* Position */}
                 <div className='relative mt-4 flex justify-between'>
                   <label htmlFor='position'>
-                    <h5>Position</h5>
+                    <h5>Position *</h5>
                   </label>
                   {errors.position && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -168,7 +169,7 @@ export default function PostJobModal(props) {
                 {/* Location */}
                 <div className='relative mt-4 flex justify-between'>
                   <label htmlFor='location'>
-                    <h5>Country</h5>
+                    <h5>Country *</h5>
                   </label>
                   {errors.location && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -190,31 +191,44 @@ export default function PostJobModal(props) {
                 {/* Contract */}
                 <div className='relative mt-4 flex justify-between'>
                   <label htmlFor='contract'>
-                    <h5>Contract</h5>
+                    <h5>Contract *</h5>
                   </label>
                   {errors.contract && (
-                    <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
+                    <h6 className='absolute top-10 right-8 hidden sm:inline-block'>
                       {errors.contract.message}
                     </h6>
                   )}
+                  <svg
+                    className='absolute right-2 top-11 -z-10 h-5 w-5 cursor-pointer fill-current text-darkgray'
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    aria-hidden='true'
+                  >
+                    <path
+                      fill-rule='evenodd'
+                      d='M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z'
+                      clip-rule='evenodd'
+                    />
+                  </svg>
                 </div>
-                <select
-                  id='contract'
-                  {...register("contract")}
-                  className={`formInput mt-3 w-full rounded-lg py-2.5 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none transition duration-200 ease-in-out focus:ring-2 ${
-                    errors.contract
-                      ? `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
-                      : `ring-1 ring-[#EAECF1] focus:ring-violet dark:bg-verydarkblue dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet `
-                  }`}
-                >
-                  <option disabled value='' selected>
-                    --select an option--
-                  </option>
-                  <option value='Full Time'>Full Time</option>
-                  <option value='Part Time'>Part Time</option>
-                  <option value='Casual'>Casual</option>
-                </select>
-                {/* <h6>{JSON.stringify(watch(), 2, null)}</h6> */}
+                <div className='flex items-center'>
+                  <select
+                    id='contract'
+                    {...register("contract")}
+                    className={`formInput mt-3 w-full cursor-pointer appearance-none rounded-lg bg-transparent py-2 px-4 font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray outline-none transition duration-200 ease-in-out focus:ring-2 ${
+                      errors.contract
+                        ? `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
+                        : `ring-1 ring-[#EAECF1] focus:ring-violet dark:ring-darkgray focus:dark:ring-2 focus:dark:ring-violet `
+                    }`}
+                  >
+                    <option disabled value='' selected>
+                      Select an option
+                    </option>
+                    <option value='Full Time'>Full Time</option>
+                    <option value='Part Time'>Part Time</option>
+                    <option value='Freelance'>Freelance</option>
+                  </select>
+                </div>
               </motion.section>
             )}
 
@@ -231,7 +245,7 @@ export default function PostJobModal(props) {
                 {/* Website */}
                 <div className='relative mt-6 flex justify-between'>
                   <label htmlFor='website'>
-                    <h5>Website</h5>
+                    <h5>Website *</h5>
                   </label>
                   {errors.website && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -253,7 +267,7 @@ export default function PostJobModal(props) {
                 {/* Apply Link */}
                 <div className='relative mt-4 flex justify-between'>
                   <label htmlFor='apply'>
-                    <h5>Email Applications To</h5>
+                    <h5>Email Applications To *</h5>
                   </label>
                   {errors.apply && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -288,7 +302,7 @@ export default function PostJobModal(props) {
                   <div className='flex w-full flex-col sm:items-end'>
                     {/* Company Logo Background Color HSL */}
                     <label>
-                      <h5>Logo Background Color</h5>
+                      <h5>* Logo Background Color</h5>
                     </label>
                     <div className='mt-3 flex space-x-4'>
                       <input
@@ -334,7 +348,6 @@ export default function PostJobModal(props) {
                     )}
                   </div>
                 </div>
-                {/* <h6>{JSON.stringify(watch(), 2, null)}</h6> */}
               </motion.section>
             )}
 
@@ -351,7 +364,7 @@ export default function PostJobModal(props) {
                 {/* Description */}
                 <div className='relative mt-6 flex justify-between'>
                   <label htmlFor='description'>
-                    <h5>Description</h5>
+                    <h5>Description *</h5>
                   </label>
                   {errors.description && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -370,7 +383,6 @@ export default function PostJobModal(props) {
                     `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
                   }`}
                 />
-                {/* <h6>{JSON.stringify(watch(), 2, null)}</h6> */}
               </motion.section>
             )}
 
@@ -387,7 +399,7 @@ export default function PostJobModal(props) {
                 {/* Requirements */}
                 <div className='relative mt-6 flex justify-between'>
                   <label htmlFor='requirements'>
-                    <h5>Requirements</h5>
+                    <h5>Requirements *</h5>
                   </label>
                   {errors.requirements && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -494,7 +506,7 @@ export default function PostJobModal(props) {
                 {/* Role */}
                 <div className='relative mt-6 flex justify-between'>
                   <label htmlFor='role'>
-                    <h5>Role</h5>
+                    <h5>Role *</h5>
                   </label>
                   {errors.role && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
@@ -594,8 +606,11 @@ export default function PostJobModal(props) {
             )}
           </form>
 
+          {currentTab === 7 && <FormSuccess />}
+
           {/* BUTTONS */}
-          {currentTab !== 6 ? (
+
+          {currentTab !== 6 && currentTab !== 7 && (
             <div>
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
               <div className='flex justify-end space-x-4'>
@@ -625,8 +640,14 @@ export default function PostJobModal(props) {
                 </button>
               </div>
             </div>
-          ) : (
+          )}
+          {currentTab === 6 && currentTab !== 7 && (
             <div>
+              {Object.keys(errors).length !== 0 && (
+                <h6 className='mb-6 text-center sm:hidden'>
+                  Invalid or Missing Fields.
+                </h6>
+              )}
               <FormDots current={currentTab} setCurrentTab={setCurrentTab} />
               <div
                 className={`flex items-center justify-end ${

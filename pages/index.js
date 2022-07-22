@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 import Head from "next/head";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
-import Card from "../components/UI/Card";
 import SearchBar from "../components/SearchBar";
-import SearchModal from "../components/SearchModal";
-import LoadingSpinner from "../components/UI/LoadingSpinner";
 import Footer from "../components/Footer";
-import PostJobModal from "../components/PostJobModal";
+import Card from "../components/UI/Card";
+import SearchModal from "../components/Modals/SearchModal";
+import PostJobModal from "../components/Modals/PostJobModal";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);

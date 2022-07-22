@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import Checkbox from "./UI/Checkbox";
+import Checkbox from "../UI/Checkbox";
 import { useTheme } from "next-themes";
 
 export default function SearchModal(props) {
