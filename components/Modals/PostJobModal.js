@@ -32,13 +32,11 @@ export default function PostJobModal(props) {
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset();
-      setCurrentTab(0);
-      props.setShowModal(false);
+      setCurrentTab(7);
     }
   }, [formState, reset]);
 
   const handleClose = () => {
-    // reset();
     setCurrentTab(0);
     props.setShowModal(false);
   };
@@ -88,6 +86,7 @@ export default function PostJobModal(props) {
       delete transformedDetails.roleItems;
 
       console.log(transformedDetails);
+      reset();
     }
   };
 

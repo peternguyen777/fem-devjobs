@@ -1,10 +1,8 @@
 import React from "react";
 import ButtonSecondary from "./UI/ButtonSecondary";
+import { urlFor } from "../sanity";
 
 const JobTitleBar = (props) => {
-  const imagePath = props.data.logo;
-  const newImagePath = "/" + imagePath.substring(2);
-
   return (
     <div className='relative mx-auto mt-14 max-w-[810px] px-6 md:px-10 '>
       <div
@@ -12,7 +10,7 @@ const JobTitleBar = (props) => {
         style={{ backgroundColor: `${props.data.logoBackground}` }}
       >
         <img
-          src={newImagePath}
+          src={urlFor(props.data.logo).url()}
           alt='company logo'
           className='md:h-[80px] md:w-[80px] md:object-contain'
         />

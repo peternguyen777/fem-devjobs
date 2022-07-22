@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import Head from "next/head";
 import Banner from "../../components/Banner";
 import Header from "../../components/Header";
-import Jobs from "../../public/data.json";
-import JobTitleBar from "../../components/JobTitleBar";
 
+import JobTitleBar from "../../components/JobTitleBar";
 import JobDescription from "../../components/JobDescription";
 import JobFooter from "../../components/JobFooter";
+
+import { sanityClient } from "../../sanity";
 
 const Page = (props) => {
   return (
@@ -34,25 +35,56 @@ const Page = (props) => {
 
 export default Page;
 
-export async function getStaticPaths() {
-  const paths = Jobs.map((post) => ({
-    params: { jobId: post.id.toString() },
+export const getStaticPaths = async () => {
+  const query = `*[_type == "jobPost"]{
+    _id    
+  }`;
+
+  const posts = await sanityClient.fetch(query);
+
+  const paths = posts.map((post) => ({
+    params: {
+      jobId: post._id.toString(),
+    },
   }));
 
   return {
-    fallback: false,
     paths,
+    fallback: "blocking",
   };
-}
+};
 
-export async function getStaticProps(context) {
-  const jobId = context.params.jobId;
+export async function getStaticProps({ params }) {
+  const query = `*[_type == "jobPost" && _id == $jobId][0] {
+    _id,
+    company,
+    logo,
+    logoBackground,
+    position,
+    postedAt,
+    website,
+    description,
+    apply,
+    contract,
+    location,
+    requirements,
+    role
+  }`;
 
-  const selectedProject = Jobs.find(({ id }) => id == jobId);
+  const post = await sanityClient.fetch(query, {
+    jobId: params?.jobId,
+  });
+
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      projectData: selectedProject,
+      projectData: post,
     },
+    revalidate: 60, //after 60s it will update the old cached version.
   };
 }

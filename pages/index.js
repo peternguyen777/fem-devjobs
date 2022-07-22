@@ -6,10 +6,12 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import Footer from "../components/Footer";
 import Card from "../components/UI/Card";
+
 import SearchModal from "../components/Modals/SearchModal";
 import PostJobModal from "../components/Modals/PostJobModal";
+import { sanityClient } from "../sanity";
 
-export default function Home() {
+export default function Home({ posts }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -28,33 +30,27 @@ export default function Home() {
   const fetchJobsHandler = useCallback(async () => {
     setIsLoading(true);
 
-    try {
-      const response = await fetch("data.json");
-      const data = await response.json();
+    const transformedJobsData = posts.map((job) => {
+      return {
+        id: job._id,
+        company: job.company,
+        logo: job.logo,
+        position: job.position,
+        postedAt: job.postedAt,
+        logoBackground: job.logoBackground,
+        contract: job.contract,
+        location: job.location,
+      };
+    });
 
-      const transformedJobsData = data.map((job) => {
-        return {
-          id: job.id,
-          company: job.company,
-          logo: job.logo,
-          position: job.position,
-          postedAt: job.postedAt,
-          logoBackground: job.logoBackground,
-          contract: job.contract,
-          location: job.location,
-        };
-      });
+    setJobData(transformedJobsData);
 
-      setJobData(transformedJobsData);
-    } catch (error) {
-      setErrorMsg(error.message);
-    }
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
     fetchJobsHandler();
-  }, [fetchJobsHandler, errorMsg]);
+  }, [fetchJobsHandler, errorMsg, posts]);
 
   useEffect(() => {
     let jobsByContract = jobData.filter((job) => {
@@ -150,3 +146,24 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const query = `*[_type == "jobPost"] | order(postedAt desc) {
+    _id,
+    company,
+    logo,
+    logoBackground,
+    position,
+    postedAt,
+    contract,
+    location,
+  }`;
+
+  const posts = await sanityClient.fetch(query);
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};

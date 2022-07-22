@@ -1,9 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import dayjs from "dayjs";
+import { urlFor } from "../../sanity";
+
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 const Card = (props) => {
-  const imagePath = props.jobData.logo;
-  const newImagePath = "/" + imagePath.substring(2);
+  const timeAgo = dayjs(props.jobData.postedAt).fromNow();
 
   return (
     <div className='relative flex flex-col justify-between rounded-md bg-white  px-8 pb-8 pt-12 dark:bg-verydarkblue'>
@@ -11,11 +15,11 @@ const Card = (props) => {
         className='absolute top-0 flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-[15px]'
         style={{ backgroundColor: `${props.jobData.logoBackground}` }}
       >
-        <img src={newImagePath} alt='company logo' />
+        <img src={urlFor(props.jobData.logo).url()} alt='company logo' />
       </div>
       <div>
         <div className='flex items-center space-x-3'>
-          <p className='leading-[20px]'>{props.jobData.postedAt}</p>
+          <p className='leading-[20px]'>{timeAgo}</p>
           <div className='h-1 w-1 rounded-full bg-darkgray'></div>
           <p className='leading-[20px]'>{props.jobData.contract}</p>
         </div>

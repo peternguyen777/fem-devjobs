@@ -1,14 +1,17 @@
 import React from "react";
 import ButtonPrimary from "./UI/ButtonPrimary";
+import dayjs from "dayjs";
 
 const JobDescription = (props) => {
+  const timePosted = dayjs(props.data.postedAt).format("ddd DD MMMM YYYY");
+
   return (
     <main className='mx-auto mt-6 mb-16 max-w-[810px] px-6 md:mb-[52px] md:px-10 lg:mb-20'>
       <div className='rounded-md bg-white p-6 dark:bg-verydarkblue md:p-12'>
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between'>
           <div className='mb-[50px] sm:mb-0'>
             <div className='flex items-center space-x-3'>
-              <p className='leading-[20px]'>{props.data.postedAt}</p>
+              <p className='leading-[20px]'>{`Posted ${timePosted}`}</p>
               <div className='h-1 w-1 rounded-full bg-darkgray'></div>
               <p className='leading-[20px]'>{props.data.contract}</p>
             </div>
