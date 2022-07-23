@@ -19,7 +19,7 @@ const JobDescription = (props) => {
             <h3 className='mt-2 cursor-pointer md:hidden'>
               {props.data.position}
             </h3>
-            <h1 className='mt-2 hidden cursor-pointer md:inline-block '>
+            <h1 className='mt-2 hidden cursor-pointer md:inline-block md:max-w-[450px]'>
               {props.data.position}
             </h1>
             <h4 className='mt-2'>{props.data.location}</h4>

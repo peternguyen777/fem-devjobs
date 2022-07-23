@@ -15,7 +15,11 @@ const Card = (props) => {
         className='absolute top-0 flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-[15px]'
         style={{ backgroundColor: `${props.jobData.logoBackground}` }}
       >
-        <img src={urlFor(props.jobData.logo).url()} alt='company logo' />
+        <img
+          src={urlFor(props.jobData?.logo).url()}
+          alt='company logo'
+          className='max-h-[40px] max-w-[40px]'
+        />
       </div>
       <div>
         <div className='flex items-center space-x-3'>

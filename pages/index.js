@@ -148,7 +148,7 @@ export default function Home({ posts }) {
 }
 
 export const getServerSideProps = async () => {
-  const query = `*[_type == "jobPost"] | order(postedAt desc) {
+  const query = `*[_type == "jobPost" && (approved == true)] | order(postedAt desc) {
     _id,
     company,
     logo,
@@ -156,7 +156,7 @@ export const getServerSideProps = async () => {
     position,
     postedAt,
     contract,
-    location,
+    location
   }`;
 
   const posts = await sanityClient.fetch(query);

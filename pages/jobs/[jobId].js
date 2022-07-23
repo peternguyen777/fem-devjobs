@@ -55,7 +55,7 @@ export const getStaticPaths = async () => {
 };
 
 export async function getStaticProps({ params }) {
-  const query = `*[_type == "jobPost" && _id == $jobId][0] {
+  const query = `*[_type == "jobPost" && _id == $jobId && (approved == true)][0] {
     _id,
     company,
     logo,

@@ -56,37 +56,16 @@ export default function PostJobModal(props) {
   const onSubmit = (data) => {
     //IF DATA IS VALID, PARSE IT.
     if (isValid) {
-      const transformedDetails = data;
-
-      //TRANSFORM HSL DATA
-      const { logoBgH, logoBgS, logoBgL } = transformedDetails;
-      const logoBackgroundColor = `hsl(${logoBgH}, ${logoBgS}%, ${logoBgL}%)`;
-      delete transformedDetails.logoBgH;
-      delete transformedDetails.logoBgS;
-      delete transformedDetails.logoBgL;
-      transformedDetails["logoBackground"] = logoBackgroundColor;
-
-      //ADD DATE DATA
-      transformedDetails["postedAt"] = new Date();
-
-      // parse reqItems
-      const reqItems = data.reqItems.map((item) => {
-        return item.items;
-      });
-      const filteredReqItems = reqItems.filter((str) => str !== "");
-      transformedDetails["requirements"]["items"] = filteredReqItems;
-      delete transformedDetails.reqItems;
-
-      //parse roleItems
-      const roleItems = data.roleItems.map((item) => {
-        return item.items;
-      });
-      const filteredRoleItems = roleItems.filter((str) => str !== "");
-      transformedDetails["role"]["items"] = filteredRoleItems;
-      delete transformedDetails.roleItems;
-
-      console.log(transformedDetails);
-      reset();
+      fetch("/api/createJobPost", {
+        method: "POST",
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
