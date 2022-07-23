@@ -71,7 +71,9 @@ export default async function createComment(req, res) {
       },
     });
   } catch (err) {
-    return res.status(500).json({ message: "Couldn't submit job post", err });
+    return res
+      .status(500)
+      .json({ message: "Couldn't submit job post. Try again.", err });
   }
 
   console.log("job post submitted!");
