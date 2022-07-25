@@ -127,7 +127,7 @@ export default function Home({ posts }) {
             })}
           </main>
         ) : (
-          <div className='my-[168px] flex justify-center sm:mt-[194px] lg:mt-[229px]'>
+          <div className='mt-[168px] flex justify-center sm:mt-[194px] lg:mt-[229px]'>
             <LoadingSpinner />
           </div>
         )}
@@ -149,7 +149,9 @@ export default function Home({ posts }) {
         )}
       </div>
 
-      <Footer showModal={showJobModal} setShowModal={setShowJobModal} />
+      {!loading && (
+        <Footer showModal={showJobModal} setShowModal={setShowJobModal} />
+      )}
     </div>
   );
 }
