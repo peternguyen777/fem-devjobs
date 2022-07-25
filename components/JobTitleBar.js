@@ -9,11 +9,13 @@ const JobTitleBar = (props) => {
         className='absolute left-0 right-0 mx-auto flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-[15px] md:mx-0 md:ml-10 md:h-[140px] md:w-[140px] md:translate-y-0 md:rounded-[6px] md:rounded-tr-none md:rounded-br-none'
         style={{ backgroundColor: `${props.data.logoBackground}` }}
       >
-        <img
-          src={urlFor(props.data.logo).url()}
-          alt='company logo'
-          className='md:h-[80px] md:w-[80px] md:object-contain'
-        />
+        {props.data.logo && (
+          <img
+            src={urlFor(props.data.logo).url()}
+            alt='company logo'
+            className='md:h-[80px] md:w-[80px] md:object-contain'
+          />
+        )}
       </div>
       <div className='flex flex-col items-center rounded-md bg-white pb-8 dark:bg-verydarkblue md:ml-[140px] md:h-[140px] md:flex-row md:justify-between md:rounded-tl-none md:rounded-bl-none md:pl-10 md:pr-12 md:pb-0'>
         <div className='flex flex-col items-center md:items-start'>

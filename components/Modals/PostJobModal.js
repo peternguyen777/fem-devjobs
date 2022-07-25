@@ -13,6 +13,10 @@ export default function PostJobModal(props) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
 
+  //image upload state
+  const [loading, setLoading] = useState(false);
+  const [imageAssetId, setImageAssetId] = useState();
+
   //GET USEFORM HOOKS
   const { register, control, handleSubmit, reset, getValues, formState } =
     useForm({
@@ -37,6 +41,7 @@ export default function PostJobModal(props) {
   }, [formState, reset]);
 
   const handleClose = () => {
+    reset();
     setCurrentTab(0);
     props.setShowModal(false);
   };
@@ -53,9 +58,37 @@ export default function PostJobModal(props) {
     remove: roleRemove,
   } = useFieldArray({ control, name: "roleItems" });
 
+  const uploadImage = (e) => {
+    const selectedFile = e.target.files[0];
+
+    // uploading asset to sanity
+    if (selectedFile.type === "image/svg+xml") {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("image", selectedFile);
+      fetch("/api/createLogoPost", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setImageAssetId(data._id);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log("Upload failed:", error.message);
+        });
+    } else {
+      setLoading(false);
+    }
+  };
+
   const onSubmit = (data) => {
-    //IF DATA IS VALID, PARSE IT.
     if (isValid) {
+      data["logoId"] = imageAssetId;
+
       fetch("/api/createJobPost", {
         method: "POST",
         body: JSON.stringify(data),
@@ -68,9 +101,6 @@ export default function PostJobModal(props) {
         });
     }
   };
-
-  // console.log(errors.reqItems);
-  // console.log(useWatch({ name: "reqItems", control }));
 
   const modalContent = (
     <AnimatePresence>
@@ -267,15 +297,24 @@ export default function PostJobModal(props) {
                 <div className='mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
                   <div className='flex w-full flex-col'>
                     {/* Company Logo Upload */}
-                    <label htmlFor='myFile'>
+                    <label htmlFor='logo'>
                       <h5>Company Logo (.svg)</h5>
                     </label>
                     <input
                       type='file'
-                      id='myFile'
-                      name='filename'
+                      id='logo'
+                      {...register("logo", {
+                        onChange: uploadImage,
+                      })}
                       className='mt-4 w-full rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-verydarkblue dark:ring-0 focus:dark:ring-0'
                     />
+                    {errors.logo && (
+                      <div className='mt-4 text-left'>
+                        <h6 className='hidden sm:inline-block'>
+                          {errors.logo.message}
+                        </h6>
+                      </div>
+                    )}
                   </div>
                   <div className='flex w-full flex-col sm:items-end'>
                     {/* Company Logo Background Color HSL */}
@@ -379,24 +418,23 @@ export default function PostJobModal(props) {
                   <label htmlFor='requirements'>
                     <h5>Requirements *</h5>
                   </label>
-                  {errors.requirements && (
+                  {errors.reqContent && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
-                      {errors.requirements.content.message}
+                      {errors.reqContent.message}
                     </h6>
                   )}
                 </div>
                 <textarea
                   type='text'
                   id='requirements'
-                  {...register("requirements.content")}
+                  {...register("reqContent")}
                   rows={6}
                   placeholder='What is your ideal candidate?'
                   className={`mt-3 w-full ${
-                    errors.requirements &&
+                    errors.reqContent &&
                     `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
                   }`}
                 />
-                {/* <p>{JSON.stringify(watch(), 2, null)}</p> */}
               </motion.section>
             )}
 
@@ -486,20 +524,20 @@ export default function PostJobModal(props) {
                   <label htmlFor='role'>
                     <h5>Role *</h5>
                   </label>
-                  {errors.role && (
+                  {errors.roleContent && (
                     <h6 className='absolute top-10 right-4 hidden sm:inline-block'>
-                      {errors.role.content.message}
+                      {errors.roleContent.message}
                     </h6>
                   )}
                 </div>
                 <textarea
                   type='text'
                   id='role'
-                  {...register("role.content")}
+                  {...register("roleContent")}
                   rows={6}
                   placeholder='What does the role entail?'
                   className={`mt-3 w-full ${
-                    errors.role &&
+                    errors.roleContent &&
                     `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
                   }`}
                 />

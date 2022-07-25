@@ -31,16 +31,15 @@ const ValidationSchema = yup.object().shape({
     .min(0, "Must be between 0 and 100")
     .max(359, "Must be between 0 and 100")
     .required("Must be between 0 and 359"),
-
   description: yup.string().trim().required("Required field."),
-  requirements: yup.object().shape({
-    content: yup.string().trim().required("Required field."),
-    items: yup.array().of(yup.string().required("required")),
-  }),
-  role: yup.object().shape({
-    content: yup.string().trim().required("Required field."),
-    items: yup.array().of(yup.string()),
-  }),
+  reqContent: yup.string().trim().required("Required field."),
+  roleContent: yup.string().trim().required("Required field."),
+  logo: yup
+    .mixed()
+    .required("Logo is required.")
+    .test("type", "Only the following formats are accepted: .svg", (value) => {
+      return value && value[0] && value[0].type === "image/svg+xml";
+    }),
 });
 
 export default ValidationSchema;
