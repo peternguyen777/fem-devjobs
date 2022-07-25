@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import Router from "next/router";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import Head from "next/head";
 import Banner from "../components/Banner";
@@ -12,9 +13,6 @@ import PostJobModal from "../components/Modals/PostJobModal";
 import { sanityClient } from "../sanity";
 
 export default function Home({ posts }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
-
   const [showModal, setShowModal] = useState(false);
   const [showJobModal, setShowJobModal] = useState(false);
 
@@ -27,9 +25,18 @@ export default function Home({ posts }) {
 
   const [jobsDisplay, setJobsDisplay] = useState(12);
 
-  const fetchJobsHandler = useCallback(async () => {
-    setIsLoading(true);
+  const [loading, setLoading] = useState(false);
 
+  Router.events.on("routeChangeStart", (url) => {
+    setLoading(true);
+    console.log("Route is changing..");
+  });
+  Router.events.on("routeChangeComplete", (url) => {
+    setLoading(false);
+    console.log("Route is changing is complete..");
+  });
+
+  const fetchJobsHandler = useCallback(async () => {
     const transformedJobsData = posts.map((job) => {
       return {
         id: job._id,
@@ -44,13 +51,11 @@ export default function Home({ posts }) {
     });
 
     setJobData(transformedJobsData);
-
-    setIsLoading(false);
   }, [posts]);
 
   useEffect(() => {
     fetchJobsHandler();
-  }, [fetchJobsHandler, errorMsg, posts]);
+  }, [fetchJobsHandler, posts]);
 
   useEffect(() => {
     let jobsByContract = jobData.filter((job) => {
@@ -101,26 +106,28 @@ export default function Home({ posts }) {
         <PostJobModal showModal={showJobModal} setShowModal={setShowJobModal} />
         <Banner />
         <Header />
-        <SearchBar
-          title={filterTitle}
-          setTitle={setFilterTitle}
-          location={filterLocation}
-          setLocation={setFilterLocation}
-          fulltime={filterFulltime}
-          setFulltime={setFilterFulltime}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
+        {!loading && (
+          <SearchBar
+            title={filterTitle}
+            setTitle={setFilterTitle}
+            location={filterLocation}
+            setLocation={setFilterLocation}
+            fulltime={filterFulltime}
+            setFulltime={setFilterFulltime}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        )}
 
         {/* SEARCH RESULTS */}
-        {!isLoading ? (
+        {!loading ? (
           <main className='mx-6 mb-8 mt-14 grid max-w-[1190px] grid-cols-1 gap-y-12 sm:mx-auto sm:mb-14 sm:mt-[70px] sm:grid-cols-2 sm:gap-x-3 sm:gap-y-16 sm:px-10 lg:mt-[105px] lg:grid-cols-3 lg:gap-x-[30px]'>
             {filteredJobData.map((job) => {
               return <Card key={job.id} jobData={job} />;
             })}
           </main>
         ) : (
-          <div className='my-14 flex justify-center sm:mt-[70px] lg:mt-[105px]'>
+          <div className='my-[168px] flex justify-center sm:mt-[194px] lg:mt-[229px]'>
             <LoadingSpinner />
           </div>
         )}
@@ -128,7 +135,7 @@ export default function Home({ posts }) {
 
       {/* FILLER DIV AT BOTTOM */}
       <div className='flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
-        {!isLoading && (
+        {!loading && (
           <button
             className={`${
               jobsDisplay > filteredJobData.length && `hidden`

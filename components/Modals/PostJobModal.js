@@ -62,7 +62,7 @@ export default function PostJobModal(props) {
     const selectedFile = e.target.files[0];
 
     // uploading asset to sanity
-    if (selectedFile.type === "image/svg+xml") {
+    if (selectedFile && selectedFile.type === "image/svg+xml") {
       setLoading(true);
 
       const formData = new FormData();
@@ -189,7 +189,7 @@ export default function PostJobModal(props) {
                   type='text'
                   id='location'
                   {...register("location")}
-                  placeholder='eg. Australia'
+                  placeholder='eg. Australia, Anywhere'
                   className={`formInput mt-3 w-full ${
                     errors.location &&
                     `bg-red-50 ring-2 ring-red-500 focus:ring-red-500  dark:ring-red-500`
@@ -297,17 +297,22 @@ export default function PostJobModal(props) {
                 <div className='mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
                   <div className='flex w-full flex-col'>
                     {/* Company Logo Upload */}
-                    <label htmlFor='logo'>
-                      <h5>Company Logo (.svg)</h5>
+                    <h5>Company Logo (.svg)*</h5>
+                    <label className='mt-4 block'>
+                      <span className='sr-only'>Choose File</span>
+                      <input
+                        type='file'
+                        {...register("logo", {
+                          onChange: uploadImage,
+                        })}
+                        className={`${
+                          errors.logo
+                            ? `file:border-red-500 file:bg-red-500 file:text-white`
+                            : `file:border-[#EEEFFC] file:bg-[#EEEFFC] file:text-violet`
+                        } block w-full px-0 py-0 text-[16px] leading-[26px] text-darkgray file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:py-2 file:px-4 file:text-[16px] file:font-normal file:leading-[26px] `}
+                      />
                     </label>
-                    <input
-                      type='file'
-                      id='logo'
-                      {...register("logo", {
-                        onChange: uploadImage,
-                      })}
-                      className='mt-4 w-full rounded-none py-0 px-0 font-kumbhsans ring-0 focus:ring-0 dark:bg-verydarkblue dark:ring-0 focus:dark:ring-0'
-                    />
+
                     {errors.logo && (
                       <div className='mt-4 text-left'>
                         <h6 className='hidden sm:inline-block'>
@@ -319,9 +324,9 @@ export default function PostJobModal(props) {
                   <div className='flex w-full flex-col sm:items-end'>
                     {/* Company Logo Background Color HSL */}
                     <label>
-                      <h5>* Logo Background Color</h5>
+                      <h5>Logo Background Color*</h5>
                     </label>
-                    <div className='mt-3 flex space-x-4'>
+                    <div className='mt-4 flex space-x-4'>
                       <input
                         type='number'
                         {...register("logoBgH")}

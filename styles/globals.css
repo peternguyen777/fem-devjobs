@@ -39,11 +39,8 @@
     @apply font-kumbhsans text-[16px] font-normal leading-[26px] text-darkgray;
   }
 
-  /* html {
+  html {
     overflow-y: scroll;
-  } */
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
   }
 
   input {
