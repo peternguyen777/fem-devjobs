@@ -47,7 +47,7 @@ const Page = (props) => {
       </div>
       <div className='w-full flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'></div>
       {/* JOB SPECIFIC FOOTER */}
-      <JobFooter data={props.projectData} />
+      {!loading && <JobFooter data={props.projectData} />}
     </div>
   );
 };
