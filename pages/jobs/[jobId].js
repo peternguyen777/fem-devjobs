@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
+import Router from "next/router";
 import Banner from "../../components/Banner";
 import Header from "../../components/Header";
 
 import JobTitleBar from "../../components/JobTitleBar";
 import JobDescription from "../../components/JobDescription";
 import JobFooter from "../../components/JobFooter";
+import LoadingSpinner from "../../components/UI/LoadingSpinner";
 
 import { sanityClient } from "../../sanity";
 
 const Page = (props) => {
+  const [loading, setLoading] = useState(false);
+
+  Router.events.on("routeChangeStart", (url) => {
+    setLoading(true);
+    console.log("Route is changing..");
+  });
+  Router.events.on("routeChangeComplete", (url) => {
+    setLoading(false);
+    console.log("Route is changing is complete..");
+  });
+
   return (
     <div className='flex h-screen flex-col'>
       <div className='bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'>
@@ -21,13 +34,19 @@ const Page = (props) => {
         </Head>
         <Banner />
         <Header />
-        {/* JOB SPECIFIC TITLE BAR */}
-        <JobTitleBar data={props.projectData} />
-        {/* JOB SPECIFIC DESCRIPTION */}
-        <JobDescription data={props.projectData} />
-        {/* JOB SPECIFIC FOOTER */}
+        {!loading ? (
+          <>
+            <JobTitleBar data={props.projectData} />
+            <JobDescription data={props.projectData} />
+          </>
+        ) : (
+          <div className='mt-[168px] flex justify-center sm:mt-[194px] lg:mt-[229px]'>
+            <LoadingSpinner />
+          </div>
+        )}
       </div>
       <div className='w-full flex-auto bg-lightgray transition-colors duration-300 ease-in-out dark:bg-midnight'></div>
+      {/* JOB SPECIFIC FOOTER */}
       <JobFooter data={props.projectData} />
     </div>
   );

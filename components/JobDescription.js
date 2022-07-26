@@ -33,22 +33,26 @@ const JobDescription = (props) => {
         <p className='mt-8 md:mt-10'>{props.data.description}</p>
         <h3 className='mt-[66px] md:mt-10'>Requirements</h3>
         <p className='mt-6 mb-8 md:mb-6'>{props.data.requirements.content}</p>
-        <ul className='list-outside list-disc space-y-2 pl-4'>
-          {props.data.requirements.items.map((item, i) => (
-            <li className='pl-5' key={i}>
-              {item}
-            </li>
-          ))}
-        </ul>
+        {props.data.requirements.items && (
+          <ul className='list-outside list-disc space-y-2 pl-4'>
+            {props.data.requirements.items.map((item, i) => (
+              <li className='pl-5' key={i}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
         <h3 className='mt-10'>What you will do</h3>
         <p className='mt-6 '>{props.data.role.content}</p>
-        <ul className='mt-8 list-outside list-disc space-y-2 pl-4 md:mt-6'>
-          {props.data.role.items.map((item, i) => (
-            <li className='pl-5' key={i}>
-              {item}
-            </li>
-          ))}
-        </ul>
+        {props.data.role.items && (
+          <ul className='mt-8 list-outside list-disc space-y-2 pl-4 md:mt-6'>
+            {props.data.role.items.map((item, i) => (
+              <li className='pl-5' key={i}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </main>
   );

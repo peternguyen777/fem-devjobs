@@ -106,18 +106,17 @@ export default function Home({ posts }) {
         <PostJobModal showModal={showJobModal} setShowModal={setShowJobModal} />
         <Banner />
         <Header />
-        {!loading && (
-          <SearchBar
-            title={filterTitle}
-            setTitle={setFilterTitle}
-            location={filterLocation}
-            setLocation={setFilterLocation}
-            fulltime={filterFulltime}
-            setFulltime={setFilterFulltime}
-            showModal={showModal}
-            setShowModal={setShowModal}
-          />
-        )}
+
+        <SearchBar
+          title={filterTitle}
+          setTitle={setFilterTitle}
+          location={filterLocation}
+          setLocation={setFilterLocation}
+          fulltime={filterFulltime}
+          setFulltime={setFilterFulltime}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
 
         {/* SEARCH RESULTS */}
         {!loading ? (
@@ -127,7 +126,7 @@ export default function Home({ posts }) {
             })}
           </main>
         ) : (
-          <div className='mt-[168px] flex justify-center sm:mt-[194px] lg:mt-[229px]'>
+          <div className='mt-[56px] flex justify-center sm:mt-[70px]  lg:mt-[105px]'>
             <LoadingSpinner />
           </div>
         )}

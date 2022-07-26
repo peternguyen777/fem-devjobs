@@ -60,11 +60,18 @@ export default function PostJobModal(props) {
 
   const uploadImage = (e) => {
     const selectedFile = e.target.files[0];
+    console.log(selectedFile);
 
     // uploading asset to sanity
-    if (selectedFile && selectedFile.type === "image/svg+xml") {
+    if (
+      selectedFile &&
+      (selectedFile.type === "image/svg+xml" ||
+        selectedFile.type === "image/svg" ||
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/png+xml")
+    ) {
       setLoading(true);
-
+      console.log("passes if test");
       const formData = new FormData();
       formData.append("image", selectedFile);
       fetch("/api/createLogoPost", {
@@ -297,7 +304,7 @@ export default function PostJobModal(props) {
                 <div className='mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
                   <div className='flex w-full flex-col'>
                     {/* Company Logo Upload */}
-                    <h5>Company Logo (.svg)*</h5>
+                    <h5>Company Logo (.svg or .png)*</h5>
                     <label className='mt-4 block'>
                       <span className='sr-only'>Choose File</span>
                       <input

@@ -37,8 +37,15 @@ const ValidationSchema = yup.object().shape({
   logo: yup
     .mixed()
     .required("Logo is required.")
-    .test("type", "Only .svg accepted", (value) => {
-      return value && value[0] && value[0].type === "image/svg+xml";
+    .test("type", "Only .svg or .png accepted", (value) => {
+      return (
+        value &&
+        value[0] &&
+        (value[0].type === "image/svg+xml" ||
+          value[0].type === "image/png+xml" ||
+          value[0].type === "image/svg" ||
+          value[0].type === "image/png")
+      );
     }),
 });
 
