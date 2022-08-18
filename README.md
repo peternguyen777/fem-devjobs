@@ -1,6 +1,7 @@
 ![alt text](https://pnguyen-portfolio.vercel.app/detail/desktop/image-devjobs-hero@2x.jpg)
 
 ### Deployment:https://fem-devjobs.vercel.app/ ###
+**NextJS / TailwindCSS / Sanity CMS / React Hook Form + Yup**
 
 ----
 
